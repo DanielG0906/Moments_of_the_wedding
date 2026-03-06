@@ -141,6 +141,7 @@
       margin: 0 0 16px;
     }
     #videoEl { width: 100%; height: 100%; object-fit: cover; display: block; }
+    #videoEl.mirrored { transform: scaleX(-1); }
     .camera-overlay { position: absolute; inset: 0; pointer-events: none; }
     .camera-overlay::before, .camera-overlay::after {
       content: ''; position: absolute; width: 28px; height: 28px;
@@ -336,7 +337,10 @@
         video: { facingMode, width:{ideal:1920}, height:{ideal:1080} },
         audio: currentMode === 'video'
       });
-      document.getElementById('videoEl').srcObject = stream;
+      const vid = document.getElementById('videoEl');
+      vid.srcObject = stream;
+      // תמונת מראה רק במצלמה קידמית
+      vid.classList.toggle('mirrored', facingMode === 'user');
       document.getElementById('cameraPlaceholder').style.display = 'none';
     } catch(e) {
       const ph = document.getElementById('cameraPlaceholder');
@@ -376,7 +380,13 @@
     let w = vid.videoWidth || 1280, h = vid.videoHeight || 960;
     if (w > MAX) { h = Math.round(h * MAX / w); w = MAX; }
     canvas.width = w; canvas.height = h;
-    canvas.getContext('2d').drawImage(vid, 0, 0, w, h);
+    const ctx = canvas.getContext('2d');
+    // שקף את התמונה אם מצלמה קידמית
+    if (facingMode === 'user') {
+      ctx.translate(w, 0);
+      ctx.scale(-1, 1);
+    }
+    ctx.drawImage(vid, 0, 0, w, h);
     canvas.toBlob(blob => { if(blob) addToQueue(blob,'image/jpeg',canvas.toDataURL('image/jpeg',0.75)); }, 'image/jpeg', 0.75);
   }
 
