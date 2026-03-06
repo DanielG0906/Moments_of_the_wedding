@@ -371,9 +371,13 @@
     flash.classList.add('flash');
     setTimeout(() => flash.classList.remove('flash'), 200);
     const canvas = document.createElement('canvas');
-    canvas.width = vid.videoWidth||1280; canvas.height = vid.videoHeight||960;
-    canvas.getContext('2d').drawImage(vid, 0, 0);
-    canvas.toBlob(blob => { if(blob) addToQueue(blob,'image/jpeg',canvas.toDataURL('image/jpeg',0.9)); }, 'image/jpeg', 0.9);
+    // דחיסת רזולוציה — מקסימום 1200px
+    const MAX = 1200;
+    let w = vid.videoWidth || 1280, h = vid.videoHeight || 960;
+    if (w > MAX) { h = Math.round(h * MAX / w); w = MAX; }
+    canvas.width = w; canvas.height = h;
+    canvas.getContext('2d').drawImage(vid, 0, 0, w, h);
+    canvas.toBlob(blob => { if(blob) addToQueue(blob,'image/jpeg',canvas.toDataURL('image/jpeg',0.75)); }, 'image/jpeg', 0.75);
   }
 
   function startRecording() {
@@ -450,24 +454,33 @@
   }
 
   async function uploadAll() {
-    const pending = queue.filter(i=>i.status==='pending');
+    const pending = queue.filter(i => i.status === 'pending');
     if (!pending.length) return showToast('אין מה להעלות', 'error');
     const btn = document.getElementById('uploadAllBtn');
-    btn.disabled=true; btn.innerHTML='<div class="spinner"></div> משתף…';
-    const wrap=document.getElementById('progressWrap'), bar=document.getElementById('progressBar');
-    wrap.classList.add('active');
-    let done=0;
-    for (const item of pending) {
-      item.status='uploading'; renderQueue();
-      item.status = await uploadItem(item) ? 'done' : 'error';
-      done++; bar.style.width=(done/pending.length*100)+'%'; renderQueue();
-    }
-    wrap.classList.remove('active'); bar.style.width='0%';
-    btn.disabled=false; btn.innerHTML='<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> שתף הכל';
-    const errors=pending.filter(i=>i.status==='error').length;
-    if (errors) showToast(`${done-errors} הועלו · ${errors} נכשלו`, 'error');
-    else        showToast(`${done} קבצים שותפו! 💕`, 'success');
-    setTimeout(()=>{ queue=queue.filter(i=>i.status!=='done'); renderQueue(); }, 2500);
+    btn.disabled = true; btn.innerHTML = '<div class="spinner"></div> משתף…';
+    const wrap = document.getElementById('progressWrap'), bar = document.getElementById('progressBar');
+    wrap.classList.add('active'); bar.style.width = '10%';
+
+    // סמן הכל כ"מעלה" בבת אחת
+    pending.forEach(i => { i.status = 'uploading'; });
+    renderQueue();
+
+    // שלח הכל במקביל!
+    const results = await Promise.all(pending.map(item => uploadItem(item)));
+
+    results.forEach((success, idx) => {
+      pending[idx].status = success ? 'done' : 'error';
+    });
+    renderQueue();
+
+    wrap.classList.remove('active'); bar.style.width = '0%';
+    btn.disabled = false;
+    btn.innerHTML = '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> שתף הכל';
+
+    const errors = results.filter(r => !r).length;
+    if (errors) showToast(`${results.length - errors} הועלו · ${errors} נכשלו`, 'error');
+    else        showToast(`${results.length} קבצים שותפו! 💕`, 'success');
+    setTimeout(() => { queue = queue.filter(i => i.status !== 'done'); renderQueue(); }, 2500);
   }
 
   async function uploadItem(item) {
