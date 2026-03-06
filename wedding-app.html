@@ -888,21 +888,18 @@ async function uploadItem(item) {
     const ext = item.type.includes('video') ? 'webm' : 'jpg';
     const filename = `memory_${Date.now()}.${ext}`;
 
-    const payload = {
+    const params = new URLSearchParams({
       filename,
       mimeType: item.type,
       data: base64,
       email: userEmail || ''
-    };
-
-    const res = await fetch(GAS_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
     });
 
-    // no-cors always returns opaque response, so we assume success
+    const res = await fetch(`${GAS_URL}?${params.toString()}`, {
+      method: 'GET',
+      mode: 'no-cors',
+    });
+
     return true;
 
   } catch(e) {
