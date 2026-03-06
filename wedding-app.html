@@ -22,12 +22,7 @@
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  html {
-    scrollbar-width: none; /* Firefox */
-  }
-  html::-webkit-scrollbar {
-    display: none; /* Chrome / Safari */
-  }
+
     body {
       font-family: 'Jost', sans-serif;
       background: var(--cream);
@@ -504,7 +499,7 @@
       const ext = item.type.includes('video') ? 'webm' : 'jpg';
       await fetch(GAS_URL, {
         method:'POST', mode:'no-cors',
-        body: JSON.stringify({ filename:`memory_${Date.now()}.${ext}`, mimeType:item.type, data:base64, email:userEmail||'' })
+        body: JSON.stringify({ filename:`memory_${Date.now()}.${ext}`, mimeType:item.type, data:base64, email:userEmail||'', secret:'vQ8$kX#2mP@9wL!4nR&zT6*jF' })
       });
       return true;
     } catch(e) { console.error('Upload error:', e); return false; }
