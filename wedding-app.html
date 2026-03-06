@@ -888,20 +888,18 @@ async function uploadItem(item) {
     const ext = item.type.includes('video') ? 'webm' : 'jpg';
     const filename = `memory_${Date.now()}.${ext}`;
 
-    const params = new URLSearchParams({
-      filename,
-      mimeType: item.type,
-      data: base64,
-      email: userEmail || ''
-    });
-
-    const res = await fetch(`${GAS_URL}?${params.toString()}`, {
-      method: 'GET',
+    await fetch(GAS_URL, {
+      method: 'POST',
       mode: 'no-cors',
+      body: JSON.stringify({
+        filename,
+        mimeType: item.type,
+        data: base64,
+        email: userEmail || ''
+      })
     });
 
     return true;
-
   } catch(e) {
     console.error('Upload error:', e);
     return false;
