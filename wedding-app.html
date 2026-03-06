@@ -22,7 +22,12 @@
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
+  html {
+    scrollbar-width: none; /* Firefox */
+  }
+  html::-webkit-scrollbar {
+    display: none; /* Chrome / Safari */
+  }
     body {
       font-family: 'Jost', sans-serif;
       background: var(--cream);
