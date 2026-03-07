@@ -1305,13 +1305,11 @@
         .then(() => showToast('הקישור הועתק! 📋', 'success'));
     }
 
-        function downloadQR() {
-      const a = document.createElement('a');
-      a.href = APP_QR_URL + '?eventID=' + currentEventId;
-      a.target = '_blank';
-      a.click();
-      showToast('פותח QR... 💕', 'success');
-    }
+      function downloadQR() {
+  const url = APP_QR_URL + '?eventID=' + currentEventId;
+  window.open(url, '_blank');
+  showToast('פותח QR... 💕', 'success');
+}
 
     function generateId(bride, groom) {
       const timestamp = Date.now().toString(36);
