@@ -1,542 +1,433 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
-
 <head>
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>רגעים שלנו</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --cream: #faf6f1;
-      --blush: #e8c5b0;
-      --rose: #c4896f;
-      --deep: #3a2820;
-      --gold: #c9a96e;
-      --sage: #8a9e8b;
-      --white: #ffffff;
-      --shadow: rgba(58, 40, 32, 0.15);
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RegaClick — הגדרת אירוע</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #faf7f2;
+  --deep: #1a1208;
+  --gold: #c9a96e;
+  --rose: #c4896f;
+  --blush: #e8c5b0;
+  --sage: #7a9e7e;
+  --ink: #2d1f14;
+  --muted: #8a7060;
+  --shadow: rgba(26,18,8,0.12);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--ink); min-height:100vh; overflow-x:hidden; }
+.bg-texture { position:fixed; inset:0; z-index:0; pointer-events:none;
+  background: radial-gradient(ellipse 80% 60% at 90% 0%,rgba(201,169,110,0.08) 0%,transparent 60%),
+              radial-gradient(ellipse 60% 80% at 10% 100%,rgba(196,137,111,0.07) 0%,transparent 60%); }
+.page { position:relative; z-index:1; display:grid; grid-template-columns:1fr 400px; min-height:100vh; }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+/* FORM */
+.form-panel { padding:56px 52px; display:flex; flex-direction:column; max-width:660px; }
+.logo { display:flex; align-items:center; gap:10px; margin-bottom:52px; }
+.logo-mark { width:32px; height:32px; background:linear-gradient(135deg,var(--rose),var(--gold)); border-radius:50%; display:flex; align-items:center; justify-content:center; color:white; font-size:.85rem; }
+.logo-text { font-family:'Cormorant Garamond',serif; font-size:1.1rem; font-style:italic; color:var(--muted); }
+.page-title { font-family:'Cormorant Garamond',serif; font-size:clamp(2.2rem,4vw,3rem); font-weight:300; line-height:1.1; color:var(--deep); margin-bottom:10px; }
+.page-title em { color:var(--rose); font-style:italic; }
+.page-sub { font-size:.85rem; color:var(--muted); line-height:1.6; margin-bottom:44px; }
 
-    body {
-      font-family: 'Jost', sans-serif;
-      background: var(--cream);
-      color: var(--deep);
-      min-height: 100dvh;
-      overflow-x: hidden;
-    }
+/* LOOKUP */
+.lookup-section { background:white; border:1px solid rgba(201,169,110,.2); border-radius:20px; padding:26px; margin-bottom:28px; box-shadow:0 4px 24px var(--shadow); }
+.lookup-label { font-size:.68rem; letter-spacing:.15em; text-transform:uppercase; color:var(--rose); margin-bottom:12px; display:block; }
+.lookup-row { display:flex; gap:10px; }
+.lookup-input { flex:1; padding:12px 16px; border:1.5px solid rgba(201,169,110,.3); border-radius:12px; direction:ltr; text-align:left; font-family:'DM Sans',sans-serif; font-size:.9rem; color:var(--ink); background:var(--cream); outline:none; transition:border-color .2s; }
+.lookup-input:focus { border-color:var(--gold); }
+.lookup-btn { padding:12px 22px; background:var(--deep); color:white; border:none; border-radius:12px; font-family:'DM Sans',sans-serif; font-size:.82rem; cursor:pointer; transition:all .2s; white-space:nowrap; }
+.lookup-btn:hover { background:var(--ink); transform:translateY(-1px); }
+.lookup-status { margin-top:10px; font-size:.78rem; padding:8px 12px; border-radius:8px; display:none; }
+.lookup-status.found { background:rgba(122,158,126,.12); color:var(--sage); display:block; }
+.lookup-status.new   { background:rgba(201,169,110,.1);  color:#9a7840;  display:block; }
 
-    body::before, body::after {
-      content: '';
-      position: fixed;
-      width: 160px; height: 160px;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M5,95 Q5,5 95,5' fill='none' stroke='%23c9a96e' stroke-width='0.8' opacity='0.4'/%3E%3Cpath d='M15,95 Q15,15 95,15' fill='none' stroke='%23c9a96e' stroke-width='0.5' opacity='0.3'/%3E%3Ccircle cx='8' cy='8' r='2' fill='%23c9a96e' opacity='0.4'/%3E%3Ccircle cx='5' cy='5' r='1' fill='%23c9a96e' opacity='0.3'/%3E%3C/svg%3E");
-      background-size: contain;
-      background-repeat: no-repeat;
-      pointer-events: none;
-      z-index: 0;
-    }
-    body::before { top: 0; left: 0; }
-    body::after  { bottom: 0; right: 0; transform: rotate(180deg); }
+/* FORM BODY */
+.form-body { display:none; }
+.form-body.visible { display:block; animation:fadeUp .4s ease; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+.form-section { background:white; border:1px solid rgba(201,169,110,.15); border-radius:20px; padding:26px; margin-bottom:18px; box-shadow:0 2px 16px rgba(26,18,8,.05); }
+.section-title { font-size:.66rem; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); margin-bottom:18px; display:flex; align-items:center; gap:8px; }
+.section-title::after { content:''; flex:1; height:1px; background:rgba(201,169,110,.2); }
+.field-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.field { margin-bottom:14px; }
+.field:last-child { margin-bottom:0; }
+.field label { display:block; font-size:.7rem; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-bottom:7px; }
+.field input { width:100%; padding:12px 16px; border:1.5px solid rgba(201,169,110,.25); border-radius:12px; font-family:'DM Sans',sans-serif; font-size:.9rem; color:var(--ink); background:var(--cream); outline:none; transition:border-color .2s,box-shadow .2s; }
+.field input:focus { border-color:var(--gold); box-shadow:0 0 0 3px rgba(201,169,110,.1); }
+.field input:disabled { opacity:.5; cursor:not-allowed; }
 
-    .app {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      min-height: 100dvh;
-      max-width: 480px;
-      margin: 0 auto;
-      padding: 0 24px 40px;
-    }
+/* THEMES */
+.themes-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; }
+.theme-card { cursor:pointer; border-radius:14px; overflow:hidden; border:2px solid transparent; transition:all .2s; position:relative; }
+.theme-card:hover { transform:translateY(-3px); box-shadow:0 8px 24px var(--shadow); }
+.theme-card.selected { border-color:var(--gold); box-shadow:0 0 0 3px rgba(201,169,110,.2); }
+.theme-card.selected .theme-check { display:flex; }
+.theme-check { position:absolute; top:5px; right:5px; width:20px; height:20px; border-radius:50%; background:var(--gold); color:white; font-size:.6rem; display:none; align-items:center; justify-content:center; }
+.theme-swatch { height:68px; width:100%; }
+.theme-name { padding:6px; text-align:center; font-size:.6rem; letter-spacing:.05em; text-transform:uppercase; color:var(--muted); background:white; }
+.t-classic { background:linear-gradient(160deg,#f9f6f0,#d4c4b0); }
+.t-boho    { background:linear-gradient(160deg,#f5ede0,#8b6355); }
+.t-gold    { background:linear-gradient(160deg,#1a1208,#c9a96e); }
+.t-floral  { background:linear-gradient(160deg,#fdf0f5,#c8899e); }
+.t-minimal { background:linear-gradient(160deg,#f0f0ee,#a8a8a0); }
 
-    header { text-align: center; padding: 36px 0 20px; }
-    .couple-names {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 8vw, 2.8rem);
-      font-weight: 300; font-style: italic;
-      color: var(--deep); line-height: 1.1; letter-spacing: 0.01em;
-    }
-    .couple-names span { color: var(--rose); }
-    .header-divider {
-      display: flex; align-items: center; gap: 12px;
-      margin: 10px auto; width: 200px;
-    }
-    .header-divider::before, .header-divider::after {
-      content: ''; flex: 1; height: 1px;
-      background: linear-gradient(to right, transparent, var(--gold));
-    }
-    .header-divider::after { background: linear-gradient(to left, transparent, var(--gold)); }
-    .header-divider svg { flex-shrink: 0; color: var(--gold); }
-    .header-sub {
-      font-size: 0.72rem; letter-spacing: 0.12em;
-      text-transform: uppercase; color: var(--rose); font-weight: 400;
-    }
+/* SAVE */
+.save-btn { width:100%; padding:16px; background:linear-gradient(135deg,var(--rose),var(--gold)); border:none; border-radius:16px; color:white; font-family:'DM Sans',sans-serif; font-size:.9rem; letter-spacing:.05em; cursor:pointer; box-shadow:0 6px 24px rgba(196,137,111,.35); transition:all .2s; margin-top:6px; display:flex; align-items:center; justify-content:center; gap:8px; }
+.save-btn:hover { transform:translateY(-2px); box-shadow:0 10px 32px rgba(196,137,111,.4); }
+.save-btn:disabled { opacity:.6; cursor:not-allowed; transform:none; }
 
-    .mode-toggle {
-      display: flex; background: rgba(58,40,32,0.06);
-      border-radius: 20px; padding: 3px; gap: 2px;
-      margin: 0 auto 12px; direction: ltr;
-    }
-    .mode-btn {
-      border: none; background: none; padding: 6px 16px;
-      border-radius: 16px; font-family: 'Jost', sans-serif;
-      font-size: 0.72rem; cursor: pointer; color: var(--rose); transition: all 0.2s;
-    }
-    .mode-btn.active { background: var(--white); color: var(--deep); box-shadow: 0 1px 6px var(--shadow); }
+/* LOCKED */
+.locked-banner { background:linear-gradient(135deg,#1a1208,#3d2b0e); border-radius:16px; padding:20px 24px; display:none; align-items:center; gap:16px; margin-top:8px; }
+.locked-banner.visible { display:flex; }
+.lock-icon { font-size:1.8rem; flex-shrink:0; }
+.lock-text h3 { font-family:'Cormorant Garamond',serif; font-size:1.1rem; color:var(--gold); margin-bottom:3px; }
+.lock-text p  { font-size:.78rem; color:rgba(255,255,255,.6); }
 
-    /* ── EMAIL NUDGE ── */
-    .email-nudge {
-      background: linear-gradient(135deg, rgba(232,197,176,0.35) 0%, rgba(201,169,110,0.18) 100%);
-      border: 1px solid rgba(201,169,110,0.45);
-      border-radius: 16px;
-      padding: 14px 16px;
-      margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      position: relative;
-      overflow: hidden;
-    }
-    .email-nudge::after {
-      content: '✉️';
-      position: absolute;
-      left: -4px; bottom: -8px;
-      font-size: 3rem;
-      opacity: 0.07;
-      pointer-events: none;
-    }
-    .email-nudge-icon { font-size: 1.5rem; flex-shrink: 0; }
-    .email-nudge-text { flex: 1; min-width: 0; }
-    .email-nudge-title {
-      font-size: 0.7rem; font-weight: 500;
-      letter-spacing: 0.06em; text-transform: uppercase;
-      color: var(--deep); margin-bottom: 3px;
-    }
-    .email-nudge-desc {
-      font-size: 0.68rem; line-height: 1.5; color: var(--rose);
-    }
-    .email-nudge-btn {
-      background: linear-gradient(135deg, var(--rose), var(--gold));
-      color: white; border: none; border-radius: 20px;
-      padding: 9px 14px;
-      font-family: 'Jost', sans-serif;
-      font-size: 0.68rem; letter-spacing: 0.05em;
-      cursor: pointer; white-space: nowrap; flex-shrink: 0;
-      box-shadow: 0 2px 10px rgba(196,137,111,0.35);
-      transition: all 0.2s;
-    }
-    .email-nudge-btn:active { transform: scale(0.95); }
+/* OUTPUT */
+.output-section { background:linear-gradient(135deg,rgba(201,169,110,.08),rgba(196,137,111,.05)); border:1px solid rgba(201,169,110,.3); border-radius:20px; padding:26px; margin-top:18px; display:none; }
+.output-section.visible { display:block; animation:fadeUp .4s ease; }
+.output-title { font-family:'Cormorant Garamond',serif; font-size:1.3rem; font-style:italic; color:var(--deep); margin-bottom:16px; }
+.event-url { background:white; border:1px solid rgba(201,169,110,.3); border-radius:12px; padding:12px 16px; font-size:.78rem; color:var(--muted); word-break:break-all; margin-bottom:14px; font-family:monospace; direction:ltr; text-align:left; }
+.event-url strong { color:var(--gold); display:block; font-size:.65rem; letter-spacing:.1em; text-transform:uppercase; margin-bottom:4px; font-family:'DM Sans',sans-serif; direction:rtl; text-align:right; }
+.output-btns { display:flex; gap:10px; }
+.out-btn { flex:1; padding:11px 16px; border-radius:12px; font-family:'DM Sans',sans-serif; font-size:.78rem; cursor:pointer; transition:all .2s; display:flex; align-items:center; justify-content:center; gap:6px; }
+.out-btn-primary   { background:var(--deep); color:white; border:none; }
+.out-btn-secondary { background:white; color:var(--deep); border:1.5px solid rgba(201,169,110,.4); }
+.out-btn-secondary:hover { border-color:var(--gold); }
 
-    /* ── CAMERA ── */
-    .camera-wrap {
-      position: relative; width: 100%; aspect-ratio: 3/4;
-      border-radius: 20px; overflow: hidden; background: var(--deep);
-      box-shadow: 0 20px 60px var(--shadow), 0 4px 20px rgba(58,40,32,0.1);
-      margin: 0 0 16px;
-    }
-    #videoEl { width: 100%; height: 100%; object-fit: cover; display: block; }
-    #videoEl.mirrored { transform: scaleX(-1); }
-    .camera-overlay { position: absolute; inset: 0; pointer-events: none; }
-    .camera-overlay::before, .camera-overlay::after {
-      content: ''; position: absolute; width: 28px; height: 28px;
-      border-color: rgba(255,255,255,0.7); border-style: solid;
-    }
-    .camera-overlay::before { top:14px; left:14px; border-width:2px 0 0 2px; border-radius:4px 0 0 0; }
-    .camera-overlay::after  { bottom:14px; right:14px; border-width:0 2px 2px 0; border-radius:0 0 4px 0; }
-    .corner-br { bottom:14px; left:14px; border-width:0 0 2px 2px; border-radius:0 0 0 4px; position:absolute; width:28px; height:28px; border-color:rgba(255,255,255,0.7); border-style:solid; pointer-events:none; }
-    .corner-tr { top:14px; right:14px; border-width:2px 2px 0 0; border-radius:0 4px 0 0; position:absolute; width:28px; height:28px; border-color:rgba(255,255,255,0.7); border-style:solid; pointer-events:none; }
-    .camera-placeholder {
-      position:absolute; inset:0; display:flex; flex-direction:column;
-      align-items:center; justify-content:center; gap:12px;
-      color:rgba(255,255,255,0.5); background:#1a0f0a;
-    }
-    .camera-placeholder svg { opacity:0.4; }
-    .camera-placeholder p { font-size:0.8rem; letter-spacing:0.05em; }
-    .flash-overlay { position:absolute; inset:0; background:white; opacity:0; pointer-events:none; transition:opacity 0.08s; border-radius:20px; }
-    .flash-overlay.flash { opacity:1; }
-    #previewStrip { position:absolute; bottom:12px; left:12px; right:12px; display:flex; gap:6px; overflow-x:auto; scrollbar-width:none; }
-    #previewStrip::-webkit-scrollbar { display:none; }
-    .preview-thumb { flex-shrink:0; width:52px; height:52px; border-radius:8px; object-fit:cover; border:2px solid rgba(255,255,255,0.8); box-shadow:0 2px 8px rgba(0,0,0,0.3); }
+/* PREVIEW */
+.preview-panel { background:white; border-right:1px solid rgba(201,169,110,.15); display:flex; flex-direction:column; position:sticky; top:0; height:100vh; overflow:hidden; }
+.preview-header { padding:26px 28px 18px; border-bottom:1px solid rgba(201,169,110,.1); }
+.preview-label { font-size:.65rem; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); }
+.preview-body { flex:1; display:flex; align-items:center; justify-content:center; padding:28px; }
+.phone-wrap { width:200px; filter:drop-shadow(0 20px 60px rgba(26,18,8,.2)); }
+.phone-shell { background:#1a1208; border-radius:38px; padding:10px; position:relative; }
+.phone-shell::before { content:''; position:absolute; top:16px; left:50%; transform:translateX(-50%); width:44px; height:4px; background:rgba(255,255,255,.15); border-radius:3px; }
+.phone-screen { border-radius:28px; overflow:hidden; aspect-ratio:9/19; position:relative; transition:all .4s ease; }
+.screen-classic { background:linear-gradient(160deg,#faf6f0,#f0e8dc); }
+.screen-boho    { background:linear-gradient(160deg,#f5ede0,#e8d0b8); }
+.screen-gold    { background:linear-gradient(160deg,#1a1208,#2d1f0a); }
+.screen-floral  { background:linear-gradient(160deg,#fdf0f5,#f5dde8); }
+.screen-minimal { background:linear-gradient(160deg,#f8f8f6,#eeeeea); }
+.screen-content { padding:24px 16px 16px; display:flex; flex-direction:column; align-items:center; height:100%; }
+.preview-couple { font-family:'Cormorant Garamond',serif; font-size:1.2rem; font-weight:300; font-style:italic; line-height:1.2; text-align:center; margin-top:8px; transition:all .3s; }
+.preview-date   { font-size:.38rem; letter-spacing:.16em; text-transform:uppercase; margin-top:4px; opacity:.6; text-align:center; }
+.preview-divider { width:36px; height:1px; margin:7px auto; opacity:.3; }
+.preview-cam-area { width:100%; flex:1; border-radius:10px; margin-top:7px; display:flex; align-items:center; justify-content:center; font-size:1.2rem; opacity:.25; }
+.preview-shutter { width:36px; height:36px; border-radius:50%; border:2px solid; margin-top:9px; flex-shrink:0; }
+.screen-classic .preview-couple{color:#3a2820} .screen-classic .preview-date{color:#c4896f} .screen-classic .preview-divider{background:#c9a96e} .screen-classic .preview-cam-area{background:rgba(58,40,32,.06)} .screen-classic .preview-shutter{border-color:#c9a96e;background:radial-gradient(circle at 35% 35%,#fff,#e8c5b0)}
+.screen-boho .preview-couple{color:#3d1f10} .screen-boho .preview-date{color:#c9956a} .screen-boho .preview-divider{background:#c9956a} .screen-boho .preview-cam-area{background:rgba(61,31,16,.06)} .screen-boho .preview-shutter{border-color:#c9956a;background:radial-gradient(circle at 35% 35%,#fff8f0,#e8c0a0)}
+.screen-gold .preview-couple{color:#f0e0c0} .screen-gold .preview-date{color:#c9a96e} .screen-gold .preview-divider{background:#c9a96e} .screen-gold .preview-cam-area{background:rgba(201,169,110,.08)} .screen-gold .preview-shutter{border-color:#c9a96e;background:radial-gradient(circle at 35% 35%,#3d2b0e,#1a1208)}
+.screen-floral .preview-couple{color:#4a1530} .screen-floral .preview-date{color:#c8899e} .screen-floral .preview-divider{background:#c8899e} .screen-floral .preview-cam-area{background:rgba(74,21,48,.05)} .screen-floral .preview-shutter{border-color:#c8899e;background:radial-gradient(circle at 35% 35%,#fff0f5,#f0c0d0)}
+.screen-minimal .preview-couple{color:#2a2a28} .screen-minimal .preview-date{color:#888880} .screen-minimal .preview-divider{background:#a8a8a0} .screen-minimal .preview-cam-area{background:rgba(42,42,40,.05)} .screen-minimal .preview-shutter{border-color:#a8a8a0;background:radial-gradient(circle at 35% 35%,#f8f8f6,#d8d8d4)}
+.preview-theme-info { padding:18px 28px 24px; border-top:1px solid rgba(201,169,110,.1); text-align:center; }
+.current-theme-name { font-family:'Cormorant Garamond',serif; font-size:1.1rem; font-style:italic; color:var(--deep); margin-bottom:3px; }
+.current-theme-desc { font-size:.7rem; color:var(--muted); line-height:1.5; }
 
-    .controls { display:flex; align-items:center; justify-content:space-between; padding:8px 0; gap:16px; }
-    .ctrl-btn { background:none; border:none; cursor:pointer; padding:8px; border-radius:50%; transition:all 0.2s; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:4px; font-size:0.6rem; letter-spacing:0.04em; color:var(--rose); font-family:'Jost',sans-serif; }
-    .ctrl-btn:active { transform:scale(0.9); opacity:0.7; }
-    .ctrl-btn svg { color:var(--deep); }
-    .shutter-btn { width:72px; height:72px; border-radius:50%; border:3px solid var(--gold); background:var(--white); cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 20px var(--shadow); transition:transform 0.15s,box-shadow 0.15s; flex-shrink:0; }
-    .shutter-btn::after { content:''; width:56px; height:56px; border-radius:50%; background:radial-gradient(circle at 35% 35%,#fff 0%,var(--blush) 100%); transition:transform 0.1s; }
-    .shutter-btn:active { transform:scale(0.93); }
-    .shutter-btn:active::after { transform:scale(0.92); }
+.spinner { width:15px; height:15px; border:2px solid rgba(255,255,255,.3); border-top-color:white; border-radius:50%; animation:spin .7s linear infinite; display:none; }
+@keyframes spin { to{transform:rotate(360deg)} }
+#toast { position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(20px); background:var(--deep); color:white; padding:12px 28px; border-radius:30px; font-size:.82rem; opacity:0; z-index:999; transition:all .3s; pointer-events:none; white-space:nowrap; }
+#toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+#toast.success { background:#4a7c59; }
+#toast.error   { background:#8b3030; }
 
-    .queue-section { margin-top:8px; }
-    .queue-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
-    .queue-label { font-size:0.68rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--rose); }
-    .upload-all-btn { background:linear-gradient(135deg,var(--rose),var(--gold)); color:white; border:none; border-radius:20px; padding:8px 20px; font-family:'Jost',sans-serif; font-size:0.72rem; letter-spacing:0.06em; cursor:pointer; transition:all 0.2s; box-shadow:0 3px 12px rgba(196,137,111,0.3); display:flex; align-items:center; gap:6px; }
-    .upload-all-btn:active { transform:scale(0.96); }
-    .upload-all-btn:disabled { opacity:0.5; cursor:not-allowed; }
-    .queue-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
-    .queue-item { position:relative; aspect-ratio:1; border-radius:10px; overflow:hidden; background:var(--deep); }
-    .queue-item img, .queue-item video { width:100%; height:100%; object-fit:cover; display:block; }
-    .queue-status { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:1.4rem; }
-    .queue-status.uploading { background:rgba(255,255,255,0.15); }
-    .queue-status.done { background:rgba(139,158,139,0.6); }
-    .queue-status.error { background:rgba(180,60,60,0.4); }
-    .remove-thumb { position:absolute; top:4px; right:4px; width:20px; height:20px; border-radius:50%; background:rgba(0,0,0,0.5); border:none; color:white; font-size:0.7rem; cursor:pointer; display:flex; align-items:center; justify-content:center; }
-
-    #toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px); background:var(--deep); color:var(--cream); padding:12px 24px; border-radius:30px; font-size:0.8rem; white-space:nowrap; opacity:0; transition:all 0.3s; z-index:200; box-shadow:0 4px 20px rgba(0,0,0,0.2); pointer-events:none; }
-    #toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
-    #toast.success { background:var(--sage); }
-    #toast.error { background:#b44040; }
-
-    .progress-bar-wrap { height:3px; background:var(--blush); border-radius:2px; overflow:hidden; margin-bottom:8px; display:none; }
-    .progress-bar-wrap.active { display:block; }
-    .progress-bar { height:100%; background:linear-gradient(to right,var(--rose),var(--gold)); border-radius:2px; transition:width 0.3s; width:0%; }
-
-    .rec-indicator { position:absolute; top:14px; left:14px; background:rgba(180,40,40,0.85); color:white; padding:4px 10px; border-radius:20px; font-size:0.72rem; display:none; align-items:center; gap:6px; }
-    .rec-dot { width:7px; height:7px; background:white; border-radius:50%; animation:blink 1s infinite; }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
-
-    #fileInput { display:none; }
-    .spinner { display:inline-block; width:14px; height:14px; border:2px solid rgba(255,255,255,0.3); border-top-color:white; border-radius:50%; animation:spin 0.7s linear infinite; }
-    @keyframes spin { to { transform:rotate(360deg); } }
-    .empty-state { text-align:center; padding:24px; color:var(--blush); font-size:0.78rem; }
-
-    .modal-backdrop { position:fixed; inset:0; background:rgba(30,15,10,0.55); backdrop-filter:blur(6px); z-index:100; display:flex; align-items:flex-end; justify-content:center; }
-    .modal-card { background:var(--cream); border-radius:28px 28px 0 0; padding:32px 28px 48px; width:100%; max-width:480px; position:relative; animation:slideUp 0.4s cubic-bezier(0.16,1,0.3,1); }
-    @keyframes slideUp { from{transform:translateY(100%)} to{transform:translateY(0)} }
-    .modal-close { position:absolute; top:16px; left:16px; background:rgba(58,40,32,0.08); border:none; width:32px; height:32px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; color:var(--deep); font-size:1rem; }
-    .modal-icon { text-align:center; margin-bottom:16px; font-size:2.2rem; }
-    .modal-title { font-family:'Cormorant Garamond',serif; font-size:1.7rem; font-style:italic; font-weight:300; text-align:center; color:var(--deep); margin-bottom:8px; }
-    .modal-desc { font-size:0.8rem; line-height:1.7; text-align:center; color:var(--rose); margin-bottom:24px; }
-    .email-input-wrap { position:relative; margin-bottom:14px; }
-    .email-input-wrap svg { position:absolute; right:14px; top:50%; transform:translateY(-50%); color:var(--blush); pointer-events:none; }
-    .email-input { width:100%; padding:14px 42px 14px 14px; border:1.5px solid var(--blush); border-radius:14px; background:var(--white); font-family:'Jost',sans-serif; font-size:0.9rem; color:var(--deep); outline:none; transition:border-color 0.2s; direction:ltr; text-align:left; }
-    .email-input:focus { border-color:var(--gold); }
-    .modal-submit { width:100%; padding:14px; background:linear-gradient(135deg,var(--rose) 0%,var(--gold) 100%); border:none; border-radius:14px; color:white; font-family:'Jost',sans-serif; font-size:0.85rem; letter-spacing:0.05em; cursor:pointer; transition:all 0.2s; box-shadow:0 4px 16px rgba(196,137,111,0.35); }
-    .modal-submit:active { transform:scale(0.98); }
-    .modal-skip { width:100%; padding:10px; border:none; background:none; color:var(--rose); font-family:'Jost',sans-serif; font-size:0.75rem; cursor:pointer; margin-top:8px; }
-  </style>
+@media(max-width:860px) {
+  .page { grid-template-columns:1fr; }
+  .preview-panel { display:none; }
+  .form-panel { padding:36px 22px; max-width:100%; }
+  .field-row { grid-template-columns:1fr; }
+  .themes-grid { grid-template-columns:repeat(3,1fr); }
+}
+</style>
 </head>
-
 <body>
-<div class="app">
+<div class="bg-texture"></div>
+<div class="page">
 
-  <header>
-    <div class="couple-names">קרן <span>&</span> דניאל</div>
-    <div class="header-divider">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg>
+  <div class="form-panel">
+    <div class="logo">
+      <div class="logo-mark">♡</div>
+      <span class="logo-text">RegaClick — הגדרת אירוע</span>
     </div>
-    <p class="header-sub">26 באוקטובר 2026 · בואו נתעד את הרגעים</p>
-  </header>
 
-  <div class="mode-toggle">
-    <button class="mode-btn active" id="photoModeBtn" onclick="setMode('photo')">📷 תמונה</button>
-    <button class="mode-btn" id="videoModeBtn" onclick="setMode('video')">🎬 וידאו</button>
-    <button class="mode-btn" id="galleryModeBtn" onclick="triggerFileInput()">🖼 גלריה</button>
-  </div>
+    <h1 class="page-title">צרו את<br><em>אלבום החתונה</em> שלכם</h1>
+    <p class="page-sub">הגדירו את האירוע שלכם תוך דקות. האורחים יסרקו QR ויעלו זכרונות ישירות לאלבום המשותף שלכם.</p>
 
-  <!-- Email Nudge Banner -->
-  <div class="email-nudge" id="emailNudge">
-    <div class="email-nudge-icon">💌</div>
-    <div class="email-nudge-text">
-      <div class="email-nudge-title">רוצה תיקייה אישית?</div>
-      <div class="email-nudge-desc">התחרטת ורוצה ליצור תיקייה משלך באלבום? הוסף כאן את המייל שלך</div>
+    <div class="lookup-section">
+      <label class="lookup-label">התחילו עם כתובת המייל שלכם</label>
+      <div class="lookup-row">
+        <input class="lookup-input" type="email" id="lookupEmail" placeholder="your@email.com">
+        <button class="lookup-btn" id="lookupBtn" onclick="lookupEmail()">המשך ←</button>
+      </div>
+      <div class="lookup-status" id="lookupStatus"></div>
     </div>
-    <button class="email-nudge-btn" onclick="showEmailModal()">הוסף מייל ✉️</button>
-  </div>
 
-  <div class="camera-wrap">
-    <video id="videoEl" autoplay playsinline muted></video>
-    <div class="camera-overlay"></div>
-    <div class="corner-br"></div>
-    <div class="corner-tr"></div>
-    <div class="camera-placeholder" id="cameraPlaceholder">
-      <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
-      <p>לחץ להפעלת המצלמה</p>
-    </div>
-    <div class="flash-overlay" id="flashOverlay"></div>
-    <div class="rec-indicator" id="recIndicator">
-      <div class="rec-dot"></div>
-      <span id="recTimer">0:00</span>
-    </div>
-    <div id="previewStrip"></div>
-  </div>
+    <div class="form-body" id="formBody">
+      <div class="form-section">
+        <div class="section-title">הזוג המאושר</div>
+        <div class="field-row">
+          <div class="field">
+            <label>שם הכלה</label>
+            <input type="text" id="brideName" placeholder="למשל: קרן" oninput="updatePreview()">
+          </div>
+          <div class="field">
+            <label>שם החתן</label>
+            <input type="text" id="groomName" placeholder="למשל: דניאל" oninput="updatePreview()">
+          </div>
+        </div>
+        <div class="field">
+          <label>תאריך החתונה</label>
+          <input type="date" id="weddingDate" oninput="checkLocked(); updatePreview()">
+        </div>
+      </div>
 
-  <div class="controls">
-    <button class="ctrl-btn" onclick="flipCamera()">
-      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
-      הפוך
-    </button>
-    <button class="shutter-btn" id="shutterBtn" onclick="captureOrRecord()"></button>
-    <button class="ctrl-btn" onclick="triggerFileInput()">
-      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-      העלה
-    </button>
-  </div>
+      <div class="form-section">
+        <div class="section-title">בחרו עיצוב לאפליקציה</div>
+        <div class="themes-grid">
+          <div class="theme-card selected" data-theme="classic" onclick="selectTheme(this)">
+            <div class="theme-check">✓</div><div class="theme-swatch t-classic"></div><div class="theme-name">קלאסי</div>
+          </div>
+          <div class="theme-card" data-theme="boho" onclick="selectTheme(this)">
+            <div class="theme-check">✓</div><div class="theme-swatch t-boho"></div><div class="theme-name">בוהו</div>
+          </div>
+          <div class="theme-card" data-theme="gold" onclick="selectTheme(this)">
+            <div class="theme-check">✓</div><div class="theme-swatch t-gold"></div><div class="theme-name">זהב לילה</div>
+          </div>
+          <div class="theme-card" data-theme="floral" onclick="selectTheme(this)">
+            <div class="theme-check">✓</div><div class="theme-swatch t-floral"></div><div class="theme-name">פרחוני</div>
+          </div>
+          <div class="theme-card" data-theme="minimal" onclick="selectTheme(this)">
+            <div class="theme-check">✓</div><div class="theme-swatch t-minimal"></div><div class="theme-name">מינימל</div>
+          </div>
+        </div>
+      </div>
 
-  <div class="progress-bar-wrap" id="progressWrap">
-    <div class="progress-bar" id="progressBar"></div>
-  </div>
-
-  <div class="queue-section">
-    <div class="queue-header">
-      <span class="queue-label">מוכן לשיתוף (<span id="queueCount">0</span>)</span>
-      <button class="upload-all-btn" id="uploadAllBtn" onclick="uploadAll()">
-        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        שתף הכל
+      <button class="save-btn" id="saveBtn" onclick="saveData()">
+        <span id="saveBtnText">שמור וצור קישור QR</span>
+        <div class="spinner" id="saveSpinner"></div>
       </button>
-    </div>
-    <div class="queue-grid" id="queueGrid">
-      <div class="empty-state" style="grid-column:1/-1">צלמו תמונות ונתחיל ✨</div>
+
+      <div class="locked-banner" id="lockedBanner">
+        <div class="lock-icon">🔒</div>
+        <div class="lock-text">
+          <h3>האירוע נעול — ה-QR שלכם מוכן!</h3>
+          <p>עריכה מושבתת 24 שעות לפני החתונה. הכל מוכן לאירוע!</p>
+        </div>
+      </div>
+
+      <div class="output-section" id="outputSection">
+        <div class="output-title">האירוע שלכם מוכן ✨</div>
+        <div class="event-url" id="eventUrlDisplay">
+          <strong>הקישור הייחודי לאירוע שלכם</strong>
+          <span id="eventUrlText">—</span>
+        </div>
+        <div class="output-btns">
+          <button class="out-btn out-btn-primary" onclick="copyUrl()">📋 העתק קישור</button>
+          <button class="out-btn out-btn-secondary" onclick="downloadQR()">⬇ הורד QR</button>
+        </div>
+      </div>
     </div>
   </div>
 
+  <div class="preview-panel">
+    <div class="preview-header"><div class="preview-label">תצוגה מקדימה חיה</div></div>
+    <div class="preview-body">
+      <div class="phone-wrap">
+        <div class="phone-shell">
+          <div class="phone-screen screen-classic" id="phoneScreen">
+            <div class="screen-content">
+              <div class="preview-couple" id="previewCouple">כלה <span style="opacity:.5">&</span> חתן</div>
+              <div class="preview-date" id="previewDate">תאריך החתונה</div>
+              <div class="preview-divider"></div>
+              <div class="preview-cam-area">📷</div>
+              <div class="preview-shutter"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="preview-theme-info">
+      <div class="current-theme-name" id="previewThemeName">קלאסי לבן</div>
+      <div class="current-theme-desc" id="previewThemeDesc">אלגנטיות נצחית בגוני שנהב חמים</div>
+    </div>
+  </div>
 </div>
 
 <div id="toast"></div>
-<input type="file" id="fileInput" accept="image/*,video/*" multiple onchange="handleFileInput(event)">
-
-<div class="modal-backdrop" id="emailModal" style="display:none">
-  <div class="modal-card">
-    <button class="modal-close" onclick="closeEmailModal()">✕</button>
-    <div class="modal-icon">💌</div>
-    <div class="modal-title">תישאר בתמונה</div>
-    <p class="modal-desc">הוסף את המייל שלך וקבל גישה לתיקייה האישית שלך באלבום, בנוסף לקישור לאלבום המשותף אחרי החתונה.</p>
-    <div class="email-input-wrap">
-      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-      <input class="email-input" type="email" id="emailInput" placeholder="your@email.com" autocomplete="email">
-    </div>
-    <button class="modal-submit" onclick="saveEmail()">שמור והתחל לצלם 📸</button>
-    <button class="modal-skip" onclick="closeEmailModal()">דלג בינתיים</button>
-  </div>
-</div>
 
 <script>
-  const GAS_URL = 'https://script.google.com/macros/s/AKfycbxFGq8aSMplkz1evuq_jcdjUi-c_YE6dYs6X7QU76VMCQC5vo8RFNoN4zyog97WHIvn/exec';
+// ══════════════════════════════════════════════
+//  CONFIG — עדכן את הכתובות שלך כאן
+// ══════════════════════════════════════════════
+const SETUP_GAS_URL = 'https://script.google.com/macros/s/AKfycbwpYzRO0vSM8eqY8EVos4q9fF6pmVtLXhM6MGoqP3A7gppbq5JiQFsFLkmq8B5wKs_p/exec';
+const APP_BASE_URL  = 'https://danielg0906.github.io/Moments_of_the_wedding/wedding-app.html'; // כתובת אפליקציית האורחים
 
-  let stream = null, facingMode = 'environment', currentMode = 'photo';
-  let mediaRecorder = null, recordedChunks = [], recInterval = null, recSeconds = 0;
-  let queue = [];
-  let userEmail = localStorage.getItem('wedding_email') || '';
+// ══════════════════════════════════════════════
+const THEMES = {
+  classic: { name:'קלאסי לבן',      desc:'אלגנטיות נצחית בגוני שנהב חמים',         screen:'screen-classic' },
+  boho:    { name:'בוהו טרקוטה',    desc:'חום אדמתי עם נשמה חופשית ורומנטית',      screen:'screen-boho'    },
+  gold:    { name:'זהב לילה',       desc:'יוקרה דרמטית עם נגיעות זהב על רקע כהה',  screen:'screen-gold'    },
+  floral:  { name:'פרחוני ורוד',    desc:'ורוד עדין ורומנטי עם חן פרחוני',         screen:'screen-floral'  },
+  minimal: { name:'מינימליסטי',     desc:'קווים נקיים ואלגנטיות שקטה',             screen:'screen-minimal' },
+};
 
-  document.addEventListener('DOMContentLoaded', () => {
-    startCamera();
-    if (userEmail) document.getElementById('emailNudge').style.display = 'none';
-    if (!localStorage.getItem('wedding_email_asked')) setTimeout(showEmailModal, 1800);
-  });
+let selectedTheme = 'classic';
+let isLocked = false;
+let currentEventId = null;
 
-  async function startCamera() {
-    try {
-      if (stream) stream.getTracks().forEach(t => t.stop());
-      stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode, width:{ideal:1920}, height:{ideal:1080} },
-        audio: currentMode === 'video'
-      });
-      const vid = document.getElementById('videoEl');
-      vid.srcObject = stream;
-      // תמונת מראה רק במצלמה קידמית
-      vid.classList.toggle('mirrored', facingMode === 'user');
-      document.getElementById('cameraPlaceholder').style.display = 'none';
-    } catch(e) {
-      const ph = document.getElementById('cameraPlaceholder');
-      ph.style.display = 'flex';
-      ph.querySelector('p').textContent = 'הגישה למצלמה נדחתה';
-      showToast('יש לאפשר גישה למצלמה בהגדרות', 'error');
-    }
-  }
+async function lookupEmail() {
+  const email = document.getElementById('lookupEmail').value.trim();
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+    return showToast('אנא הכניסו כתובת מייל תקינה', 'error');
 
-  function flipCamera() { facingMode = facingMode==='environment'?'user':'environment'; startCamera(); }
+  const btn = document.getElementById('lookupBtn');
+  btn.textContent = '...'; btn.disabled = true;
 
-  function setMode(mode) {
-    currentMode = mode;
-    document.getElementById('photoModeBtn').classList.toggle('active', mode==='photo');
-    document.getElementById('videoModeBtn').classList.toggle('active', mode==='video');
-    document.getElementById('galleryModeBtn').classList.remove('active');
-    if (mediaRecorder && mediaRecorder.state==='recording') stopRecording();
-    startCamera();
-  }
-
-  function triggerFileInput() { document.getElementById('fileInput').click(); }
-
-  function captureOrRecord() {
-    if (currentMode==='photo') capturePhoto();
-    else { if (mediaRecorder && mediaRecorder.state==='recording') stopRecording(); else startRecording(); }
-  }
-
-  function capturePhoto() {
-    const vid = document.getElementById('videoEl');
-    if (!stream) return showToast('יש להפעיל את המצלמה קודם', 'error');
-    const flash = document.getElementById('flashOverlay');
-    flash.classList.add('flash');
-    setTimeout(() => flash.classList.remove('flash'), 200);
-    const canvas = document.createElement('canvas');
-    // דחיסת רזולוציה — מקסימום 1200px
-    const MAX = 1200;
-    let w = vid.videoWidth || 1280, h = vid.videoHeight || 960;
-    if (w > MAX) { h = Math.round(h * MAX / w); w = MAX; }
-    canvas.width = w; canvas.height = h;
-    const ctx = canvas.getContext('2d');
-    // שקף את התמונה אם מצלמה קידמית
-    if (facingMode === 'user') {
-      ctx.translate(w, 0);
-      ctx.scale(-1, 1);
-    }
-    ctx.drawImage(vid, 0, 0, w, h);
-    canvas.toBlob(blob => { if(blob) addToQueue(blob,'image/jpeg',canvas.toDataURL('image/jpeg',0.75)); }, 'image/jpeg', 0.75);
-  }
-
-  function startRecording() {
-    if (!stream) return showToast('יש להפעיל את המצלמה קודם', 'error');
-    recordedChunks = [];
-    const opts = MediaRecorder.isTypeSupported('video/webm;codecs=vp9') ? {mimeType:'video/webm;codecs=vp9'} : {mimeType:'video/webm'};
-    mediaRecorder = new MediaRecorder(stream, opts);
-    mediaRecorder.ondataavailable = e => { if(e.data.size) recordedChunks.push(e.data); };
-    mediaRecorder.onstop = () => {
-      const blob = new Blob(recordedChunks, {type:'video/webm'});
-      addToQueue(blob, 'video/webm', URL.createObjectURL(blob), true);
-    };
-    mediaRecorder.start(100);
-    document.getElementById('recIndicator').style.display = 'flex';
-    document.getElementById('shutterBtn').style.borderColor = '#b44040';
-    recSeconds = 0;
-    recInterval = setInterval(() => {
-      recSeconds++;
-      const m=Math.floor(recSeconds/60), s=recSeconds%60;
-      document.getElementById('recTimer').textContent = `${m}:${s.toString().padStart(2,'0')}`;
-    }, 1000);
-  }
-
-  function stopRecording() {
-    if (mediaRecorder && mediaRecorder.state==='recording') mediaRecorder.stop();
-    clearInterval(recInterval);
-    document.getElementById('recIndicator').style.display = 'none';
-    document.getElementById('shutterBtn').style.borderColor = '';
-  }
-
-  function handleFileInput(e) {
-    [...e.target.files].forEach(file => {
-      const r = new FileReader();
-      r.onload = ev => addToQueue(file, file.type, ev.target.result);
-      r.readAsDataURL(file);
-    });
-    e.target.value = '';
-  }
-
-  function addToQueue(blob, type, dataUrl, isVideo=false) {
-    const id = Date.now() + Math.random();
-    queue.push({id, blob, type, dataUrl, status:'pending', isVideo});
-    renderQueue();
-    if (!isVideo) {
-      const img = document.createElement('img');
-      img.src = dataUrl; img.className = 'preview-thumb';
-      document.getElementById('previewStrip').prepend(img);
-    }
-    showToast('נוסף לתור ✓', 'success');
-  }
-
-  function renderQueue() {
-    const grid = document.getElementById('queueGrid');
-    document.getElementById('queueCount').textContent = queue.filter(i=>i.status!=='done').length;
-    if (!queue.length) { grid.innerHTML='<div class="empty-state" style="grid-column:1/-1">צלמו תמונות ונתחיל ✨</div>'; return; }
-    grid.innerHTML = '';
-    queue.forEach(item => {
-      const div = document.createElement('div');
-      div.className = 'queue-item';
-      if (item.isVideo) { const v=document.createElement('video'); v.src=item.dataUrl; v.muted=true; v.playsInline=true; div.appendChild(v); }
-      else { const img=document.createElement('img'); img.src=item.dataUrl; div.appendChild(img); }
-      const st = document.createElement('div'); st.className='queue-status';
-      if (item.status==='uploading') { st.classList.add('uploading'); st.innerHTML='<div class="spinner"></div>'; }
-      else if (item.status==='done')  { st.classList.add('done'); st.textContent='✓'; }
-      else if (item.status==='error') { st.classList.add('error'); st.textContent='✗'; }
-      div.appendChild(st);
-      if (item.status==='pending') {
-        const rm=document.createElement('button'); rm.className='remove-thumb'; rm.textContent='✕';
-        rm.onclick=()=>{ queue=queue.filter(q=>q.id!==item.id); renderQueue(); };
-        div.appendChild(rm);
-      }
-      grid.appendChild(div);
-    });
-  }
-
-  async function uploadAll() {
-    const pending = queue.filter(i => i.status === 'pending');
-    if (!pending.length) return showToast('אין מה להעלות', 'error');
-    const btn = document.getElementById('uploadAllBtn');
-    btn.disabled = true; btn.innerHTML = '<div class="spinner"></div> משתף…';
-    const wrap = document.getElementById('progressWrap'), bar = document.getElementById('progressBar');
-    wrap.classList.add('active'); bar.style.width = '10%';
-
-    // סמן הכל כ"מעלה" בבת אחת
-    pending.forEach(i => { i.status = 'uploading'; });
-    renderQueue();
-
-    // שלח הכל במקביל!
-    const results = await Promise.all(pending.map(item => uploadItem(item)));
-
-    results.forEach((success, idx) => {
-      pending[idx].status = success ? 'done' : 'error';
-    });
-    renderQueue();
-
-    wrap.classList.remove('active'); bar.style.width = '0%';
-    btn.disabled = false;
-    btn.innerHTML = '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> שתף הכל';
-
-    const errors = results.filter(r => !r).length;
-    if (errors) showToast(`${results.length - errors} הועלו · ${errors} נכשלו`, 'error');
-    else        showToast(`${results.length} קבצים שותפו! 💕`, 'success');
-    setTimeout(() => { queue = queue.filter(i => i.status !== 'done'); renderQueue(); }, 2500);
-  }
-
-  async function uploadItem(item) {
-    try {
-      const base64 = await blobToBase64(item.blob);
-      const ext = item.type.includes('video') ? 'webm' : 'jpg';
-      await fetch(GAS_URL, {
-        method:'POST', mode:'no-cors',
-        body: JSON.stringify({ filename:`memory_${Date.now()}.${ext}`, mimeType:item.type, data:base64, email:userEmail||'', secret:'vQ8$kX#2mP@9wL!4nR&zT6*jF' })
-      });
-      return true;
-    } catch(e) { console.error('Upload error:', e); return false; }
-  }
-
-  function blobToBase64(blob) {
-    return new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result.split(',')[1]); r.onerror=rej; r.readAsDataURL(blob); });
-  }
-
-  function showEmailModal() {
-    document.getElementById('emailModal').style.display='flex';
-    if (userEmail) document.getElementById('emailInput').value=userEmail;
-  }
-
-  function closeEmailModal() {
-    document.getElementById('emailModal').style.display='none';
-    localStorage.setItem('wedding_email_asked','1');
-  }
-
-  function saveEmail() {
-    const val = document.getElementById('emailInput').value.trim();
-    if (val && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
-      userEmail=val; localStorage.setItem('wedding_email',val);
-      closeEmailModal();
-      document.getElementById('emailNudge').style.display='none';
-      showToast('המייל נשמר 💌', 'success');
+  try {
+    const res  = await fetch(`${SETUP_GAS_URL}?action=lookup&email=${encodeURIComponent(email)}`);
+    const data = await res.json();
+    const st   = document.getElementById('lookupStatus');
+    if (data.found) {
+      st.className = 'lookup-status found';
+      st.textContent = '✓ ברוכים הבאים חזרה! הפרטים שלכם נטענו.';
+      populateForm(data.record);
     } else {
-      document.getElementById('emailInput').style.borderColor='#b44040';
-      setTimeout(()=>document.getElementById('emailInput').style.borderColor='',1500);
+      st.className = 'lookup-status new';
+      st.textContent = '✦ זוג חדש — בואו נגדיר את האירוע שלכם!';
     }
+    document.getElementById('formBody').classList.add('visible');
+  } catch(e) {
+    const st = document.getElementById('lookupStatus');
+    st.className = 'lookup-status new';
+    st.textContent = '✦ מלאו את הפרטים למטה';
+    st.style.display = 'block';
+    document.getElementById('formBody').classList.add('visible');
   }
+  btn.textContent = 'המשך ←'; btn.disabled = false;
+}
 
-  let toastTimer;
-  function showToast(msg, type='') {
-    const t=document.getElementById('toast'); t.textContent=msg; t.className='show '+type;
-    clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.className='',3000);
+function populateForm(r) {
+  if (r.brideName)   document.getElementById('brideName').value   = r.brideName;
+  if (r.groomName)   document.getElementById('groomName').value   = r.groomName;
+  if (r.weddingDate) document.getElementById('weddingDate').value = r.weddingDate;
+  if (r.theme)       selectThemeByKey(r.theme);
+  if (r.eventId)   { currentEventId = r.eventId; showOutput(r.eventId); }
+  updatePreview(); checkLocked();
+}
+
+function selectTheme(card) {
+  if (isLocked) return;
+  document.querySelectorAll('.theme-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  selectedTheme = card.dataset.theme;
+  updatePreview();
+}
+function selectThemeByKey(key) {
+  const c = document.querySelector(`[data-theme="${key}"]`);
+  if (c) selectTheme(c);
+}
+
+function updatePreview() {
+  const bride = document.getElementById('brideName').value || 'כלה';
+  const groom = document.getElementById('groomName').value || 'חתן';
+  const date  = document.getElementById('weddingDate').value;
+  const t     = THEMES[selectedTheme];
+  document.getElementById('previewCouple').innerHTML = `${bride} <span style="opacity:.4">&</span> ${groom}`;
+  if (date) {
+    const d = new Date(date + 'T00:00:00');
+    document.getElementById('previewDate').textContent =
+      d.toLocaleDateString('he-IL',{day:'numeric',month:'long',year:'numeric'});
   }
+  document.getElementById('phoneScreen').className     = `phone-screen ${t.screen}`;
+  document.getElementById('previewThemeName').textContent = t.name;
+  document.getElementById('previewThemeDesc').textContent = t.desc;
+}
+
+function checkLocked() {
+  const v = document.getElementById('weddingDate').value;
+  if (!v) return;
+  const h = (new Date(v+'T00:00:00').getTime() - Date.now()) / 3600000;
+  isLocked = h <= 24;
+  document.getElementById('saveBtn').style.display = isLocked ? 'none' : 'flex';
+  document.getElementById('lockedBanner').classList.toggle('visible', isLocked);
+  ['brideName','groomName','weddingDate'].forEach(id => document.getElementById(id).disabled = isLocked);
+  document.querySelectorAll('.theme-card').forEach(c => {
+    c.style.opacity = isLocked ? '.5' : '1';
+    c.style.cursor  = isLocked ? 'not-allowed' : 'pointer';
+  });
+  if (isLocked && currentEventId) showOutput(currentEventId);
+}
+
+async function saveData() {
+  const email = document.getElementById('lookupEmail').value.trim();
+  const bride = document.getElementById('brideName').value.trim();
+  const groom = document.getElementById('groomName').value.trim();
+  const date  = document.getElementById('weddingDate').value;
+  if (!bride || !groom) return showToast('אנא הכניסו את שמות הזוג', 'error');
+  if (!date)            return showToast('אנא בחרו תאריך חתונה', 'error');
+
+  const btn  = document.getElementById('saveBtn');
+  const txt  = document.getElementById('saveBtnText');
+  const spin = document.getElementById('saveSpinner');
+  btn.disabled = true; txt.textContent = 'שומר...'; spin.style.display = 'block';
+
+  const eventId = currentEventId || generateId(bride, groom);
+  try {
+    await fetch(SETUP_GAS_URL, {
+      method:'POST', mode:'no-cors',
+      body: JSON.stringify({ action:'save', email, brideName:bride, groomName:groom, weddingDate:date, theme:selectedTheme, eventId })
+    });
+    currentEventId = eventId;
+    showOutput(eventId);
+    showToast('נשמר בהצלחה! 🎉', 'success');
+  } catch(e) {
+    currentEventId = eventId;
+    showOutput(eventId);
+    showToast('נשמר! (מצב דמו)', 'success');
+  }
+  btn.disabled = false; txt.textContent = 'שמור וצור קישור QR'; spin.style.display = 'none';
+}
+
+function showOutput(eventId) {
+  const url = `${APP_BASE_URL}?eventID=${eventId}`;
+  document.getElementById('eventUrlText').textContent = url;
+  document.getElementById('outputSection').classList.add('visible');
+  setTimeout(() => document.getElementById('outputSection').scrollIntoView({behavior:'smooth',block:'nearest'}), 100);
+}
+
+function copyUrl() {
+  navigator.clipboard.writeText(document.getElementById('eventUrlText').textContent)
+    .then(() => showToast('הקישור הועתק! 📋', 'success'));
+}
+
+function downloadQR() {
+  const url = document.getElementById('eventUrlText').textContent;
+  const a = document.createElement('a');
+  a.href = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(url)}&color=3a2820&bgcolor=faf6f1&margin=20`;
+  a.download = 'wedding-qr.png'; a.target = '_blank'; a.click();
+  showToast('מוריד QR... 💕', 'success');
+}
+
+function generateId(bride, groom) {
+  const timestamp = Date.now().toString(36);
+  const rand = Math.random().toString(36).substring(2, 7);
+  return 'ev-' + timestamp + '-' + rand;
+}
+
+let toastTimer;
+function showToast(msg, type='') {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = 'show ' + type;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.className = '', 3200);
+}
+
+updatePreview();
+document.getElementById('lookupEmail').addEventListener('keydown', e => { if(e.key==='Enter') lookupEmail(); });
 </script>
 </body>
 </html>
