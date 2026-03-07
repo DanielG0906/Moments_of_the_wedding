@@ -1060,13 +1060,20 @@
   <div id="toast"></div>
 
   <script>
-// ══════════════════════════════════════════════
-//  CONFIG 
-// ══════════════════════════════════════════════
-const SETUP_GAS_URL = 'https://script.google.com/macros/s/AKfycbwpYzRO0vSM8eqY8EVos4q9fF6pmVtLXhM6MGoqP3A7gppbq5JiQFsFLkmq8B5wKs_p/exec';
-const APP_BASE_URL  = 'https://danielg0906.github.io/Moments_of_the_wedding'; // כתובת אפליקציית האורחים
- const APP_QR_URL = 'https://danielg0906.github.io/Moments_of_the_wedding/wedding-qr.html';
-// ══════════════════════════════════════════════
+    // ══════════════════════════════════════════════
+    //  CONFIG — אוטומטי לפי סביבה
+    // ══════════════════════════════════════════════
+    const IS_LOCAL = window.location.protocol === 'file:';
+
+    const SETUP_GAS_URL = 'https://script.google.com/macros/s/AKfycbwpYzRO0vSM8eqY8EVos4q9fF6pmVtLXhM6MGoqP3A7gppbq5JiQFsFLkmq8B5wKs_p/exec';
+
+    const APP_BASE_URL = IS_LOCAL
+      ? 'file:///C:/Users/Daniel%20Gurevich/OneDrive%20-%20Open%20University%20of%20Israel/שולחן%20העבודה/RegaClick/RegaClick/index.html'
+      : 'https://danielg0906.github.io/Moments_of_the_wedding';
+
+    const APP_QR_URL = IS_LOCAL
+      ? 'file:///C:/Users/Daniel%20Gurevich/OneDrive%20-%20Open%20University%20of%20Israel/שולחן%20העבודה/RegaClick/RegaClick/wedding-qr.html'
+      : 'https://danielg0906.github.io/Moments_of_the_wedding/wedding-qr.html';
 
     // ══════════════════════════════════════════════
     const THEMES = {
