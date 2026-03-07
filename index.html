@@ -8,7 +8,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>רגעים שלנו</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap"
+    rel="stylesheet">
   <style>
     :root {
       --cream: #faf6f1;
@@ -21,7 +23,12 @@
       --shadow: rgba(58, 40, 32, 0.15);
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
 
     body {
       font-family: 'Jost', sans-serif;
@@ -31,18 +38,29 @@
       overflow-x: hidden;
     }
 
-    body::before, body::after {
+    body::before,
+    body::after {
       content: '';
       position: fixed;
-      width: 160px; height: 160px;
+      width: 160px;
+      height: 160px;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M5,95 Q5,5 95,5' fill='none' stroke='%23c9a96e' stroke-width='0.8' opacity='0.4'/%3E%3Cpath d='M15,95 Q15,15 95,15' fill='none' stroke='%23c9a96e' stroke-width='0.5' opacity='0.3'/%3E%3Ccircle cx='8' cy='8' r='2' fill='%23c9a96e' opacity='0.4'/%3E%3Ccircle cx='5' cy='5' r='1' fill='%23c9a96e' opacity='0.3'/%3E%3C/svg%3E");
       background-size: contain;
       background-repeat: no-repeat;
       pointer-events: none;
       z-index: 0;
     }
-    body::before { top: 0; left: 0; }
-    body::after  { bottom: 0; right: 0; transform: rotate(180deg); }
+
+    body::before {
+      top: 0;
+      left: 0;
+    }
+
+    body::after {
+      bottom: 0;
+      right: 0;
+      transform: rotate(180deg);
+    }
 
     .app {
       position: relative;
@@ -55,45 +73,89 @@
       padding: 0 24px 40px;
     }
 
-    header { text-align: center; padding: 36px 0 20px; }
+    header {
+      text-align: center;
+      padding: 36px 0 20px;
+    }
+
     .couple-names {
       font-family: 'Cormorant Garamond', serif;
       font-size: clamp(2rem, 8vw, 2.8rem);
-      font-weight: 300; font-style: italic;
-      color: var(--deep); line-height: 1.1; letter-spacing: 0.01em;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--deep);
+      line-height: 1.1;
+      letter-spacing: 0.01em;
     }
-    .couple-names span { color: var(--rose); }
+
+    .couple-names span {
+      color: var(--rose);
+    }
+
     .header-divider {
-      display: flex; align-items: center; gap: 12px;
-      margin: 10px auto; width: 200px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 10px auto;
+      width: 200px;
     }
-    .header-divider::before, .header-divider::after {
-      content: ''; flex: 1; height: 1px;
+
+    .header-divider::before,
+    .header-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
       background: linear-gradient(to right, transparent, var(--gold));
     }
-    .header-divider::after { background: linear-gradient(to left, transparent, var(--gold)); }
-    .header-divider svg { flex-shrink: 0; color: var(--gold); }
+
+    .header-divider::after {
+      background: linear-gradient(to left, transparent, var(--gold));
+    }
+
+    .header-divider svg {
+      flex-shrink: 0;
+      color: var(--gold);
+    }
+
     .header-sub {
-      font-size: 0.72rem; letter-spacing: 0.12em;
-      text-transform: uppercase; color: var(--rose); font-weight: 400;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rose);
+      font-weight: 400;
     }
 
     .mode-toggle {
-      display: flex; background: rgba(58,40,32,0.06);
-      border-radius: 20px; padding: 3px; gap: 2px;
-      margin: 0 auto 12px; direction: ltr;
+      display: flex;
+      background: rgba(58, 40, 32, 0.06);
+      border-radius: 20px;
+      padding: 3px;
+      gap: 2px;
+      margin: 0 auto 12px;
+      direction: ltr;
     }
-    .mode-btn {
-      border: none; background: none; padding: 6px 16px;
-      border-radius: 16px; font-family: 'Jost', sans-serif;
-      font-size: 0.72rem; cursor: pointer; color: var(--rose); transition: all 0.2s;
-    }
-    .mode-btn.active { background: var(--white); color: var(--deep); box-shadow: 0 1px 6px var(--shadow); }
 
-    /* ── EMAIL NUDGE ── */
+    .mode-btn {
+      border: none;
+      background: none;
+      padding: 6px 16px;
+      border-radius: 16px;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.72rem;
+      cursor: pointer;
+      color: var(--rose);
+      transition: all 0.2s;
+    }
+
+    .mode-btn.active {
+      background: var(--white);
+      color: var(--deep);
+      box-shadow: 0 1px 6px var(--shadow);
+    }
+
     .email-nudge {
-      background: linear-gradient(135deg, rgba(232,197,176,0.35) 0%, rgba(201,169,110,0.18) 100%);
-      border: 1px solid rgba(201,169,110,0.45);
+      background: linear-gradient(135deg, rgba(232, 197, 176, 0.35) 0%, rgba(201, 169, 110, 0.18) 100%);
+      border: 1px solid rgba(201, 169, 110, 0.45);
       border-radius: 16px;
       padding: 14px 16px;
       margin-bottom: 14px;
@@ -103,568 +165,1371 @@
       position: relative;
       overflow: hidden;
     }
+
     .email-nudge::after {
       content: '✉️';
       position: absolute;
-      left: -4px; bottom: -8px;
+      left: -4px;
+      bottom: -8px;
       font-size: 3rem;
       opacity: 0.07;
       pointer-events: none;
     }
-    .email-nudge-icon { font-size: 1.5rem; flex-shrink: 0; }
-    .email-nudge-text { flex: 1; min-width: 0; }
+
+    .email-nudge-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .email-nudge-text {
+      flex: 1;
+      min-width: 0;
+    }
+
     .email-nudge-title {
-      font-size: 0.7rem; font-weight: 500;
-      letter-spacing: 0.06em; text-transform: uppercase;
-      color: var(--deep); margin-bottom: 3px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--deep);
+      margin-bottom: 3px;
     }
+
     .email-nudge-desc {
-      font-size: 0.68rem; line-height: 1.5; color: var(--rose);
+      font-size: 0.68rem;
+      line-height: 1.5;
+      color: var(--rose);
     }
+
     .email-nudge-btn {
       background: linear-gradient(135deg, var(--rose), var(--gold));
-      color: white; border: none; border-radius: 20px;
+      color: white;
+      border: none;
+      border-radius: 20px;
       padding: 9px 14px;
       font-family: 'Jost', sans-serif;
-      font-size: 0.68rem; letter-spacing: 0.05em;
-      cursor: pointer; white-space: nowrap; flex-shrink: 0;
-      box-shadow: 0 2px 10px rgba(196,137,111,0.35);
+      font-size: 0.68rem;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+      box-shadow: 0 2px 10px rgba(196, 137, 111, 0.35);
       transition: all 0.2s;
     }
-    .email-nudge-btn:active { transform: scale(0.95); }
 
-    /* ── CAMERA ── */
+    .email-nudge-btn:active {
+      transform: scale(0.95);
+    }
+
     .camera-wrap {
-      position: relative; width: 100%; aspect-ratio: 3/4;
-      border-radius: 20px; overflow: hidden; background: var(--deep);
-      box-shadow: 0 20px 60px var(--shadow), 0 4px 20px rgba(58,40,32,0.1);
+      position: relative;
+      width: 100%;
+      aspect-ratio: 3/4;
+      border-radius: 20px;
+      overflow: hidden;
+      background: var(--deep);
+      box-shadow: 0 20px 60px var(--shadow), 0 4px 20px rgba(58, 40, 32, 0.1);
       margin: 0 0 16px;
     }
-    #videoEl { width: 100%; height: 100%; object-fit: cover; display: block; }
-    #videoEl.mirrored { transform: scaleX(-1); }
-    .camera-overlay { position: absolute; inset: 0; pointer-events: none; }
-    .camera-overlay::before, .camera-overlay::after {
-      content: ''; position: absolute; width: 28px; height: 28px;
-      border-color: rgba(255,255,255,0.7); border-style: solid;
+
+    #videoEl {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
-    .camera-overlay::before { top:14px; left:14px; border-width:2px 0 0 2px; border-radius:4px 0 0 0; }
-    .camera-overlay::after  { bottom:14px; right:14px; border-width:0 2px 2px 0; border-radius:0 0 4px 0; }
-    .corner-br { bottom:14px; left:14px; border-width:0 0 2px 2px; border-radius:0 0 0 4px; position:absolute; width:28px; height:28px; border-color:rgba(255,255,255,0.7); border-style:solid; pointer-events:none; }
-    .corner-tr { top:14px; right:14px; border-width:2px 2px 0 0; border-radius:0 4px 0 0; position:absolute; width:28px; height:28px; border-color:rgba(255,255,255,0.7); border-style:solid; pointer-events:none; }
+
+    #videoEl.mirrored {
+      transform: scaleX(-1);
+    }
+
+    .camera-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .camera-overlay::before,
+    .camera-overlay::after {
+      content: '';
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      border-color: rgba(255, 255, 255, 0.7);
+      border-style: solid;
+    }
+
+    .camera-overlay::before {
+      top: 14px;
+      left: 14px;
+      border-width: 2px 0 0 2px;
+      border-radius: 4px 0 0 0;
+    }
+
+    .camera-overlay::after {
+      bottom: 14px;
+      right: 14px;
+      border-width: 0 2px 2px 0;
+      border-radius: 0 0 4px 0;
+    }
+
+    .corner-br {
+      bottom: 14px;
+      left: 14px;
+      border-width: 0 0 2px 2px;
+      border-radius: 0 0 0 4px;
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      border-color: rgba(255, 255, 255, 0.7);
+      border-style: solid;
+      pointer-events: none;
+    }
+
+    .corner-tr {
+      top: 14px;
+      right: 14px;
+      border-width: 2px 2px 0 0;
+      border-radius: 0 4px 0 0;
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      border-color: rgba(255, 255, 255, 0.7);
+      border-style: solid;
+      pointer-events: none;
+    }
+
     .camera-placeholder {
-      position:absolute; inset:0; display:flex; flex-direction:column;
-      align-items:center; justify-content:center; gap:12px;
-      color:rgba(255,255,255,0.5); background:#1a0f0a;
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      color: rgba(255, 255, 255, 0.5);
+      background: #1a0f0a;
     }
-    .camera-placeholder svg { opacity:0.4; }
-    .camera-placeholder p { font-size:0.8rem; letter-spacing:0.05em; }
-    .flash-overlay { position:absolute; inset:0; background:white; opacity:0; pointer-events:none; transition:opacity 0.08s; border-radius:20px; }
-    .flash-overlay.flash { opacity:1; }
-    #previewStrip { position:absolute; bottom:12px; left:12px; right:12px; display:flex; gap:6px; overflow-x:auto; scrollbar-width:none; }
-    #previewStrip::-webkit-scrollbar { display:none; }
-    .preview-thumb { flex-shrink:0; width:52px; height:52px; border-radius:8px; object-fit:cover; border:2px solid rgba(255,255,255,0.8); box-shadow:0 2px 8px rgba(0,0,0,0.3); }
 
-    .controls { display:flex; align-items:center; justify-content:space-between; padding:8px 0; gap:16px; }
-    .ctrl-btn { background:none; border:none; cursor:pointer; padding:8px; border-radius:50%; transition:all 0.2s; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:4px; font-size:0.6rem; letter-spacing:0.04em; color:var(--rose); font-family:'Jost',sans-serif; }
-    .ctrl-btn:active { transform:scale(0.9); opacity:0.7; }
-    .ctrl-btn svg { color:var(--deep); }
-    .shutter-btn { width:72px; height:72px; border-radius:50%; border:3px solid var(--gold); background:var(--white); cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 20px var(--shadow); transition:transform 0.15s,box-shadow 0.15s; flex-shrink:0; }
-    .shutter-btn::after { content:''; width:56px; height:56px; border-radius:50%; background:radial-gradient(circle at 35% 35%,#fff 0%,var(--blush) 100%); transition:transform 0.1s; }
-    .shutter-btn:active { transform:scale(0.93); }
-    .shutter-btn:active::after { transform:scale(0.92); }
+    .camera-placeholder svg {
+      opacity: 0.4;
+    }
 
-    .queue-section { margin-top:8px; }
-    .queue-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
-    .queue-label { font-size:0.68rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--rose); }
-    .upload-all-btn { background:linear-gradient(135deg,var(--rose),var(--gold)); color:white; border:none; border-radius:20px; padding:8px 20px; font-family:'Jost',sans-serif; font-size:0.72rem; letter-spacing:0.06em; cursor:pointer; transition:all 0.2s; box-shadow:0 3px 12px rgba(196,137,111,0.3); display:flex; align-items:center; gap:6px; }
-    .upload-all-btn:active { transform:scale(0.96); }
-    .upload-all-btn:disabled { opacity:0.5; cursor:not-allowed; }
-    .queue-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
-    .queue-item { position:relative; aspect-ratio:1; border-radius:10px; overflow:hidden; background:var(--deep); }
-    .queue-item img, .queue-item video { width:100%; height:100%; object-fit:cover; display:block; }
-    .queue-status { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:1.4rem; }
-    .queue-status.uploading { background:rgba(255,255,255,0.15); }
-    .queue-status.done { background:rgba(139,158,139,0.6); }
-    .queue-status.error { background:rgba(180,60,60,0.4); }
-    .remove-thumb { position:absolute; top:4px; right:4px; width:20px; height:20px; border-radius:50%; background:rgba(0,0,0,0.5); border:none; color:white; font-size:0.7rem; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+    .camera-placeholder p {
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+    }
 
-    #toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px); background:var(--deep); color:var(--cream); padding:12px 24px; border-radius:30px; font-size:0.8rem; white-space:nowrap; opacity:0; transition:all 0.3s; z-index:200; box-shadow:0 4px 20px rgba(0,0,0,0.2); pointer-events:none; }
-    #toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
-    #toast.success { background:var(--sage); }
-    #toast.error { background:#b44040; }
+    .flash-overlay {
+      position: absolute;
+      inset: 0;
+      background: white;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.08s;
+      border-radius: 20px;
+    }
 
-    .progress-bar-wrap { height:3px; background:var(--blush); border-radius:2px; overflow:hidden; margin-bottom:8px; display:none; }
-    .progress-bar-wrap.active { display:block; }
-    .progress-bar { height:100%; background:linear-gradient(to right,var(--rose),var(--gold)); border-radius:2px; transition:width 0.3s; width:0%; }
+    .flash-overlay.flash {
+      opacity: 1;
+    }
 
-    .rec-indicator { position:absolute; top:14px; left:14px; background:rgba(180,40,40,0.85); color:white; padding:4px 10px; border-radius:20px; font-size:0.72rem; display:none; align-items:center; gap:6px; }
-    .rec-dot { width:7px; height:7px; background:white; border-radius:50%; animation:blink 1s infinite; }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+    #previewStrip {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      right: 12px;
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
 
-    #fileInput { display:none; }
-    .spinner { display:inline-block; width:14px; height:14px; border:2px solid rgba(255,255,255,0.3); border-top-color:white; border-radius:50%; animation:spin 0.7s linear infinite; }
-    @keyframes spin { to { transform:rotate(360deg); } }
-    .empty-state { text-align:center; padding:24px; color:var(--blush); font-size:0.78rem; }
+    #previewStrip::-webkit-scrollbar {
+      display: none;
+    }
 
-    .modal-backdrop { position:fixed; inset:0; background:rgba(30,15,10,0.55); backdrop-filter:blur(6px); z-index:100; display:flex; align-items:flex-end; justify-content:center; }
-    .modal-card { background:var(--cream); border-radius:28px 28px 0 0; padding:32px 28px 48px; width:100%; max-width:480px; position:relative; animation:slideUp 0.4s cubic-bezier(0.16,1,0.3,1); }
-    @keyframes slideUp { from{transform:translateY(100%)} to{transform:translateY(0)} }
-    .modal-close { position:absolute; top:16px; left:16px; background:rgba(58,40,32,0.08); border:none; width:32px; height:32px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; color:var(--deep); font-size:1rem; }
-    .modal-icon { text-align:center; margin-bottom:16px; font-size:2.2rem; }
-    .modal-title { font-family:'Cormorant Garamond',serif; font-size:1.7rem; font-style:italic; font-weight:300; text-align:center; color:var(--deep); margin-bottom:8px; }
-    .modal-desc { font-size:0.8rem; line-height:1.7; text-align:center; color:var(--rose); margin-bottom:24px; }
-    .email-input-wrap { position:relative; margin-bottom:14px; }
-    .email-input-wrap svg { position:absolute; right:14px; top:50%; transform:translateY(-50%); color:var(--blush); pointer-events:none; }
-    .email-input { width:100%; padding:14px 42px 14px 14px; border:1.5px solid var(--blush); border-radius:14px; background:var(--white); font-family:'Jost',sans-serif; font-size:0.9rem; color:var(--deep); outline:none; transition:border-color 0.2s; direction:ltr; text-align:left; }
-    .email-input:focus { border-color:var(--gold); }
-    .modal-submit { width:100%; padding:14px; background:linear-gradient(135deg,var(--rose) 0%,var(--gold) 100%); border:none; border-radius:14px; color:white; font-family:'Jost',sans-serif; font-size:0.85rem; letter-spacing:0.05em; cursor:pointer; transition:all 0.2s; box-shadow:0 4px 16px rgba(196,137,111,0.35); }
-    .modal-submit:active { transform:scale(0.98); }
-    .modal-skip { width:100%; padding:10px; border:none; background:none; color:var(--rose); font-family:'Jost',sans-serif; font-size:0.75rem; cursor:pointer; margin-top:8px; }
+    .preview-thumb {
+      flex-shrink: 0;
+      width: 52px;
+      height: 52px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 2px solid rgba(255, 255, 255, 0.8);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      transition: transform 0.15s;
+    }
+
+    .preview-thumb:active {
+      transform: scale(0.93);
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      width: 100%;
+    }
+
+    .ctrl-btn {
+      margin-right: 4px;
+      justify-self: start;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 50%;
+      transition: all 0.2s;
+      justify-content: center;
+      gap: 4px;
+      font-size: 0.6rem;
+      letter-spacing: 0.04em;
+      color: var(--rose);
+      font-family: 'Jost', sans-serif;
+    }
+
+    .ctrl-btn:active {
+      transform: scale(0.9);
+      opacity: 0.7;
+    }
+
+    .ctrl-btn svg {
+      color: var(--deep);
+    }
+
+    .shutter-btn {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      border: 3px solid var(--gold);
+      background: var(--white);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px var(--shadow);
+      transition: transform 0.15s, box-shadow 0.15s;
+      flex-shrink: 0;
+    }
+
+    .shutter-btn::after {
+      content: '';
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #fff 0%, var(--blush) 100%);
+      transition: transform 0.1s;
+    }
+
+    .shutter-btn:active {
+      transform: scale(0.93);
+    }
+
+    .shutter-btn:active::after {
+      transform: scale(0.92);
+    }
+
+    .queue-section {
+      margin-top: 8px;
+    }
+
+    .queue-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .queue-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--rose);
+    }
+
+    .upload-all-btn {
+      background: linear-gradient(135deg, var(--rose), var(--gold));
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 8px 20px;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 3px 12px rgba(196, 137, 111, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .upload-all-btn:active {
+      transform: scale(0.96);
+    }
+
+    .upload-all-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .queue-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .queue-item {
+      position: relative;
+      aspect-ratio: 1;
+      border-radius: 10px;
+      overflow: hidden;
+      background: var(--deep);
+      cursor: pointer;
+    }
+
+    .queue-item img,
+    .queue-item video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .queue-status {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+    }
+
+    .queue-status.uploading {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .queue-status.done {
+      background: rgba(139, 158, 139, 0.6);
+    }
+
+    .queue-status.error {
+      background: rgba(180, 60, 60, 0.4);
+    }
+
+    .select-circle {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.85);
+      background: rgba(0, 0, 0, 0.25);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      transition: all 0.15s;
+    }
+
+    .select-mode .select-circle {
+      display: flex;
+    }
+
+    .queue-item.selected .select-circle {
+      background: var(--gold);
+      border-color: var(--gold);
+    }
+
+    .queue-item.selected .select-circle::after {
+      content: '✓';
+      color: white;
+      font-size: 0.7rem;
+      font-weight: bold;
+    }
+
+    .select-bar {
+      display: none;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .select-bar.visible {
+      display: flex;
+    }
+
+    .select-bar-btn {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 14px;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s;
+    }
+
+    .select-bar-share {
+      background: linear-gradient(135deg, var(--rose), var(--gold));
+      color: white;
+      box-shadow: 0 3px 10px rgba(196, 137, 111, 0.3);
+    }
+
+    .select-bar-share:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .select-bar-delete {
+      background: rgba(180, 60, 60, 0.1);
+      color: #b44040;
+      border: 1.5px solid rgba(180, 60, 60, 0.2);
+    }
+
+    .select-bar-delete:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .select-bar-cancel {
+      background: rgba(58, 40, 32, 0.06);
+      color: var(--deep);
+      border: 1.5px solid rgba(58, 40, 32, 0.1);
+    }
+
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--deep);
+      color: var(--cream);
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      white-space: nowrap;
+      opacity: 0;
+      transition: all 0.3s;
+      z-index: 200;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      pointer-events: none;
+    }
+
+    #toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    #toast.success {
+      background: var(--sage);
+    }
+
+    #toast.error {
+      background: #b44040;
+    }
+
+    .progress-bar-wrap {
+      height: 3px;
+      background: var(--blush);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 8px;
+      display: none;
+    }
+
+    .progress-bar-wrap.active {
+      display: block;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(to right, var(--rose), var(--gold));
+      border-radius: 2px;
+      transition: width 0.3s;
+      width: 0%;
+    }
+
+    .rec-indicator {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: rgba(180, 40, 40, 0.85);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      display: none;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .rec-dot {
+      width: 7px;
+      height: 7px;
+      background: white;
+      border-radius: 50%;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: 0.2
+      }
+    }
+
+    #fileInput {
+      display: none;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 24px;
+      color: var(--blush);
+      font-size: 0.78rem;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(30, 15, 10, 0.55);
+      backdrop-filter: blur(6px);
+      z-index: 100;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .modal-card {
+      background: var(--cream);
+      border-radius: 28px 28px 0 0;
+      padding: 32px 28px 48px;
+      width: 100%;
+      max-width: 480px;
+      position: relative;
+      animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(100%)
+      }
+
+      to {
+        transform: translateY(0)
+      }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: rgba(58, 40, 32, 0.08);
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--deep);
+      font-size: 1rem;
+    }
+
+    .modal-icon {
+      text-align: center;
+      margin-bottom: 16px;
+      font-size: 2.2rem;
+    }
+
+    .modal-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.7rem;
+      font-style: italic;
+      font-weight: 300;
+      text-align: center;
+      color: var(--deep);
+      margin-bottom: 8px;
+    }
+
+    .modal-desc {
+      font-size: 0.8rem;
+      line-height: 1.7;
+      text-align: center;
+      color: var(--rose);
+      margin-bottom: 24px;
+    }
+
+    .email-input-wrap {
+      position: relative;
+      margin-bottom: 14px;
+    }
+
+    .email-input-wrap svg {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--blush);
+      pointer-events: none;
+    }
+
+    .email-input {
+      width: 100%;
+      padding: 14px 42px 14px 14px;
+      border: 1.5px solid var(--blush);
+      border-radius: 14px;
+      background: var(--white);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.9rem;
+      color: var(--deep);
+      outline: none;
+      transition: border-color 0.2s;
+      direction: ltr;
+      text-align: left;
+    }
+
+    .email-input:focus {
+      border-color: var(--gold);
+    }
+
+    .modal-submit {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--rose) 0%, var(--gold) 100%);
+      border: none;
+      border-radius: 14px;
+      color: white;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 16px rgba(196, 137, 111, 0.35);
+    }
+
+    .modal-submit:active {
+      transform: scale(0.98);
+    }
+
+    .modal-skip {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      background: none;
+      color: var(--rose);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.75rem;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    /* ── PHOTO PREVIEW MODAL ── */
+    #photoPreviewModal {
+      position: fixed;
+      inset: 0;
+      z-index: 150;
+      background: rgba(10, 5, 2, 0.94);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      animation: fadeIn 0.2s ease;
+    }
+
+    #photoPreviewModal.show {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0
+      }
+
+      to {
+        opacity: 1
+      }
+    }
+
+    .photo-preview-img {
+      width: 100%;
+      max-width: 420px;
+      max-height: 65vh;
+      object-fit: contain;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .photo-preview-actions {
+      display: flex;
+      gap: 16px;
+      margin-top: 28px;
+      width: 100%;
+      max-width: 420px;
+    }
+
+    .preview-action-btn {
+      flex: 1;
+      padding: 16px;
+      border: none;
+      border-radius: 16px;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .preview-btn-keep {
+      background: linear-gradient(135deg, var(--rose), var(--gold));
+      color: white;
+      box-shadow: 0 4px 16px rgba(196, 137, 111, 0.4);
+    }
+
+    .preview-btn-keep:active {
+      transform: scale(0.97);
+    }
+
+    .preview-btn-discard {
+      background: rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.65);
+      border: 1.5px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .preview-btn-discard:active {
+      transform: scale(0.97);
+      background: rgba(180, 60, 60, 0.3);
+    }
+
+    .photo-preview-hint {
+      margin-top: 14px;
+      font-size: 0.68rem;
+      color: rgba(255, 255, 255, 0.28);
+      letter-spacing: 0.06em;
+    }
+
     /* ── מסך טעינה ── */
     #loadingScreen {
-      position: fixed; inset: 0; z-index: 999;
+      position: fixed;
+      inset: 0;
+      z-index: 999;
       background: var(--cream);
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       gap: 16px;
       transition: opacity 0.5s ease;
     }
+
     #loadingScreen.hide {
       opacity: 0;
       pointer-events: none;
     }
+
     .loading-heart {
       font-size: 2.8rem;
       animation: heartbeat 1s ease-in-out infinite;
     }
+
     @keyframes heartbeat {
-      0%,100% { transform: scale(1); }
-      50%      { transform: scale(1.25); }
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.25);
+      }
     }
+
     .loading-text {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem; font-style: italic;
-      color: var(--rose); letter-spacing: 0.05em;
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--rose);
+      letter-spacing: 0.05em;
     }
+
     .loading-dots::after {
       content: '';
       animation: dots 1.4s infinite;
     }
+
     @keyframes dots {
-      0%   { content: ''; }
-      33%  { content: '.'; }
-      66%  { content: '..'; }
-      100% { content: '...'; }
+      0% {
+        content: '';
+      }
+
+      33% {
+        content: '.';
+      }
+
+      66% {
+        content: '..';
+      }
+
+      100% {
+        content: '...'
+      }
     }
+
     /* ── מסך שגיאה ── */
     #errorScreen {
-      position: fixed; inset: 0; z-index: 999;
+      position: fixed;
+      inset: 0;
+      z-index: 999;
       background: var(--cream);
       display: none;
       flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 16px; padding: 40px;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 40px;
       text-align: center;
     }
-    #errorScreen.show { display: flex; }
-    .error-icon { font-size: 3rem; }
+
+    #errorScreen.show {
+      display: flex;
+    }
+
+    .error-icon {
+      font-size: 3rem;
+    }
+
     .error-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.6rem; font-style: italic;
+      font-size: 1.6rem;
+      font-style: italic;
       color: var(--deep);
     }
+
     .error-desc {
-      font-size: 0.85rem; color: var(--rose);
-      line-height: 1.7; max-width: 280px;
+      font-size: 0.85rem;
+      color: var(--rose);
+      line-height: 1.7;
+      max-width: 280px;
     }
   </style>
 </head>
 
 <body>
 
-<!-- מסך טעינה -->
-<!-- מסך שגיאה -->
-<div id="errorScreen">
-  <div class="error-icon">💔</div>
-  <div class="error-title">הקישור אינו תקין</div>
-  <div class="error-desc">נראה שהקישור שסרקת אינו מלא או פג תוקף.<br>בקשו מהזוג המאושר לשלוח לכם את הקישור הנכון.</div>
-</div>
-
-<div id="loadingScreen">
-  <div class="loading-heart">💕</div>
-  <div class="loading-text">טוענים את האירוע<span class="loading-dots"></span></div>
-</div>
-
-<div class="app">
-
-  <header>
-    <div class="couple-names" id="coupleNames">קרן <span>&</span> דניאל</div>
-    <div class="header-divider">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg>
+  <div id="errorScreen">
+    <div class="error-icon">💔</div>
+    <div class="error-title">הקישור אינו תקין</div>
+    <div class="error-desc">נראה שהקישור שסרקת אינו מלא או פג תוקף.<br>בקשו מהזוג המאושר לשלוח לכם את הקישור הנכון.
     </div>
-    <p class="header-sub">26 באוקטובר 2026 · בואו נתעד את הרגעים</p>
-  </header>
-
-  <div class="mode-toggle">
-    <button class="mode-btn active" id="photoModeBtn" onclick="setMode('photo')">📷 תמונה</button>
-    <button class="mode-btn" id="videoModeBtn" onclick="setMode('video')">🎬 וידאו</button>
-    <button class="mode-btn" id="galleryModeBtn" onclick="triggerFileInput()">🖼 גלריה</button>
   </div>
 
-  <!-- Email Nudge Banner -->
-  <div class="email-nudge" id="emailNudge">
-    <div class="email-nudge-icon">💌</div>
-    <div class="email-nudge-text">
-      <div class="email-nudge-title">רוצה תיקייה אישית?</div>
-      <div class="email-nudge-desc">התחרטת ורוצה ליצור תיקייה משלך באלבום? הוסף כאן את המייל שלך</div>
+  <div id="loadingScreen">
+    <div class="loading-heart">💕</div>
+    <div class="loading-text">טוענים את האירוע<span class="loading-dots"></span></div>
+  </div>
+
+  <!-- ── PHOTO PREVIEW MODAL ── -->
+  <div id="photoPreviewModal">
+    <img class="photo-preview-img" id="photoPreviewImg" src="" alt="תצוגה מקדימה">
+    <div class="photo-preview-actions">
+      <button class="preview-action-btn preview-btn-discard" id="previewDiscardBtn">🗑 מחק תמונה</button>
+      <button class="preview-action-btn preview-btn-keep" onclick="closePhotoPreview()">← חזרה</button>
     </div>
-    <button class="email-nudge-btn" onclick="showEmailModal()">הוסף מייל ✉️</button>
   </div>
 
-  <div class="camera-wrap">
-    <video id="videoEl" autoplay playsinline muted></video>
-    <div class="camera-overlay"></div>
-    <div class="corner-br"></div>
-    <div class="corner-tr"></div>
-    <div class="camera-placeholder" id="cameraPlaceholder">
-      <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
-      <p>לחץ להפעלת המצלמה</p>
+  <div class="app">
+    <header>
+      <div class="couple-names" id="coupleNames">קרן <span>&</span> דניאל</div>
+      <div class="header-divider">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z" />
+        </svg>
+      </div>
+      <p class="header-sub">26 באוקטובר 2026 · בואו נתעד את הרגעים</p>
+    </header>
+
+    <div class="mode-toggle">
+      <button class="mode-btn active" id="photoModeBtn" onclick="setMode('photo')">📷 תמונה</button>
+      <button class="mode-btn" id="videoModeBtn" onclick="setMode('video')">🎬 וידאו</button>
     </div>
-    <div class="flash-overlay" id="flashOverlay"></div>
-    <div class="rec-indicator" id="recIndicator">
-      <div class="rec-dot"></div>
-      <span id="recTimer">0:00</span>
+
+    <div class="email-nudge" id="emailNudge">
+      <div class="email-nudge-icon">💌</div>
+      <div class="email-nudge-text">
+        <div class="email-nudge-title">רוצה תיקייה אישית?</div>
+        <div class="email-nudge-desc">התחרטת ורוצה ליצור תיקייה משלך באלבום? הוסף כאן את המייל שלך</div>
+      </div>
+      <button class="email-nudge-btn" onclick="showEmailModal()">הוסף מייל ✉️</button>
     </div>
-    <div id="previewStrip"></div>
-  </div>
 
-  <div class="controls">
-    <button class="ctrl-btn" onclick="flipCamera()">
-      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
-      הפוך
-    </button>
-    <button class="shutter-btn" id="shutterBtn" onclick="captureOrRecord()"></button>
-    <button class="ctrl-btn" onclick="triggerFileInput()">
-      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-      העלה
-    </button>
-  </div>
+    <div class="camera-wrap">
+      <video id="videoEl" autoplay playsinline muted></video>
+      <div class="camera-overlay"></div>
+      <div class="corner-br"></div>
+      <div class="corner-tr"></div>
+      <div class="camera-placeholder" id="cameraPlaceholder">
+        <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" />
+          <circle cx="12" cy="13" r="4" />
+        </svg>
+        <p>לחץ להפעלת המצלמה</p>
+      </div>
+      <div class="flash-overlay" id="flashOverlay"></div>
+      <div class="rec-indicator" id="recIndicator">
+        <div class="rec-dot"></div>
+        <span id="recTimer">0:00</span>
+      </div>
+      <div id="previewStrip"></div>
+    </div>
 
-  <div class="progress-bar-wrap" id="progressWrap">
-    <div class="progress-bar" id="progressBar"></div>
-  </div>
-
-  <div class="queue-section">
-    <div class="queue-header">
-      <span class="queue-label">מוכן לשיתוף (<span id="queueCount">0</span>)</span>
-      <button class="upload-all-btn" id="uploadAllBtn" onclick="uploadAll()">
-        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        שתף הכל
+    <div class="controls">
+      <button class="ctrl-btn" onclick="flipCamera()">
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+          <path d="M1 4v6h6" />
+          <path d="M3.51 15a9 9 0 102.13-9.36L1 10" />
+        </svg>
+        הפוך
       </button>
+      <button class="shutter-btn" id="shutterBtn" onclick="captureOrRecord()"></button>
+      <div></div>
     </div>
-    <div class="queue-grid" id="queueGrid">
-      <div class="empty-state" style="grid-column:1/-1">צלמו תמונות ונתחיל ✨</div>
+
+    <div class="progress-bar-wrap" id="progressWrap">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="queue-section">
+      <div class="queue-header">
+        <span class="queue-label">האלבום שלי (<span id="queueCount">0</span>)</span>
+        <div style="display:flex;gap:8px;align-items:center">
+          <button id="selectModeBtn" onclick="toggleSelectMode()"
+            style="background:rgba(58,40,32,0.06);color:var(--deep);padding:7px 14px;border-radius:14px;font-size:0.72rem;border:1.5px solid rgba(58,40,32,0.1);font-family:'Jost',sans-serif;cursor:pointer;">בחר</button>
+          <button class="upload-all-btn" id="uploadAllBtn" onclick="uploadAll()">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+              <polyline points="17 8 12 3 7 8" />
+              <line x1="12" y1="3" x2="12" y2="15" />
+            </svg>
+            שתף הכל
+          </button>
+        </div>
+      </div>
+      <div class="select-bar" id="selectBar">
+        <button class="select-bar-btn select-bar-cancel" onclick="toggleSelectMode()">ביטול</button>
+        <button class="select-bar-btn select-bar-delete" id="selectDeleteBtn" onclick="deleteSelected()" disabled>🗑
+          הסר</button>
+        <button class="select-bar-btn select-bar-share" id="selectShareBtn" onclick="shareSelected()" disabled>
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+            <polyline points="17 8 12 3 7 8" />
+            <line x1="12" y1="3" x2="12" y2="15" />
+          </svg>
+          שתף נבחרות
+        </button>
+      </div>
+      <div class="queue-grid" id="queueGrid">
+        <div class="empty-state" style="grid-column:1/-1">צלמו תמונות ויצטרפו לאלבום ✨</div>
+      </div>
     </div>
   </div>
 
-</div>
+  <div id="toast"></div>
+  <input type="file" id="fileInput" accept="image/*,video/*" multiple onchange="handleFileInput(event)">
 
-<div id="toast"></div>
-<input type="file" id="fileInput" accept="image/*,video/*" multiple onchange="handleFileInput(event)">
-
-<div class="modal-backdrop" id="emailModal" style="display:none">
-  <div class="modal-card">
-    <button class="modal-close" onclick="closeEmailModal()">✕</button>
-    <div class="modal-icon">💌</div>
-    <div class="modal-title">תישאר בתמונה</div>
-    <p class="modal-desc">הוסף את המייל שלך וקבל גישה לתיקייה האישית שלך באלבום, בנוסף לקישור לאלבום המשותף אחרי החתונה.</p>
-    <div class="email-input-wrap">
-      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-      <input class="email-input" type="email" id="emailInput" placeholder="your@email.com" autocomplete="email">
+  <div class="modal-backdrop" id="emailModal" style="display:none">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeEmailModal()">✕</button>
+      <div class="modal-icon">💌</div>
+      <div class="modal-title">תישאר בתמונה</div>
+      <p class="modal-desc">הוסף את המייל שלך וקבל גישה לתיקייה האישית שלך באלבום, בנוסף לקישור לאלבום המשותף אחרי
+        החתונה.</p>
+      <div class="email-input-wrap">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+          <polyline points="22,6 12,13 2,6" />
+        </svg>
+        <input class="email-input" type="email" id="emailInput" placeholder="your@email.com" autocomplete="email">
+      </div>
+      <button class="modal-submit" onclick="saveEmail()">שמור והתחל לצלם 📸</button>
+      <button class="modal-skip" onclick="closeEmailModal()">דלג בינתיים</button>
     </div>
-    <button class="modal-submit" onclick="saveEmail()">שמור והתחל לצלם 📸</button>
-    <button class="modal-skip" onclick="closeEmailModal()">דלג בינתיים</button>
   </div>
-</div>
 
-<script>
-  // ── CONFIG ──────────────────────────────────────────
-  const GAS_URL = 'https://script.google.com/macros/s/AKfycbwpYzRO0vSM8eqY8EVos4q9fF6pmVtLXhM6MGoqP3A7gppbq5JiQFsFLkmq8B5wKs_p/exec';
+  <script>
+    const GAS_URL = 'https://script.google.com/macros/s/AKfycbwpYzRO0vSM8eqY8EVos4q9fF6pmVtLXhM6MGoqP3A7gppbq5JiQFsFLkmq8B5wKs_p/exec';
 
-  let stream = null, facingMode = 'environment', currentMode = 'photo';
-  let mediaRecorder = null, recordedChunks = [], recInterval = null, recSeconds = 0;
-  let queue = [];
-  let userEmail = localStorage.getItem('wedding_email') || '';
-  let currentEventId = new URLSearchParams(window.location.search).get('eventID') || null;
+    let stream = null, facingMode = 'environment', currentMode = 'photo';
+    let mediaRecorder = null, recordedChunks = [], recInterval = null, recSeconds = 0;
+    let queue = [];
+    let selectMode = false;
+    let selectedIds = new Set();
+    let userEmail = localStorage.getItem('wedding_email') || '';
+    let currentEventId = new URLSearchParams(window.location.search).get('eventID') || null;
 
-  function hideLoading() {
-    const s = document.getElementById('loadingScreen');
-    s.classList.add('hide');
-    setTimeout(() => s.remove(), 500);
-  }
+    // ── Preview state ──
+    let pendingBlob = null, pendingDataUrl = null;
 
-  document.addEventListener('DOMContentLoaded', () => {
-    startCamera();
-    if (userEmail) document.getElementById('emailNudge').style.display = 'none';
-    if (!localStorage.getItem('wedding_email_asked')) setTimeout(showEmailModal, 1800);
-    if (currentEventId) {
-      loadEventData(currentEventId);
-    } else {
-      document.getElementById('loadingScreen').style.display = 'none';
-      document.getElementById('errorScreen').classList.add('show');
+    function hideLoading() {
+      const s = document.getElementById('loadingScreen');
+      s.classList.add('hide');
+      setTimeout(() => s.remove(), 500);
     }
-  });
 
-  async function loadEventData(eventId) {
-    console.log('🔍 טוען eventId:', eventId);
-    console.log('🔗 GAS URL:', GAS_URL);
-    try {
-      const url = GAS_URL + '?action=event&eventID=' + eventId;
-      console.log('📡 שולח בקשה ל:', url);
-      const res  = await fetch(url);
-      const data = await res.json();
-      console.log('📦 תגובה מה-GAS:', data);
-      if (!data.found) { console.warn('⚠️ eventID לא נמצא ב-Sheets'); return; }
-      const { brideName, groomName, weddingDate, theme } = data.event;
-      if (brideName && groomName) {
-        const el = document.getElementById('coupleNames') || document.querySelector('.couple-names');
-        el.innerHTML = brideName + ' <span>&</span> ' + groomName;
-        el.style.visibility = 'visible';
+    document.addEventListener('DOMContentLoaded', () => {
+      startCamera();
+      if (userEmail) document.getElementById('emailNudge').style.display = 'none';
+      if (!localStorage.getItem('wedding_email_asked')) setTimeout(showEmailModal, 1800);
+      if (currentEventId) {
+        loadEventData(currentEventId);
+      } else {
+        document.getElementById('loadingScreen').style.display = 'none';
+        document.getElementById('errorScreen').classList.add('show');
       }
-      if (weddingDate) {
-        const d = new Date(weddingDate + 'T00:00:00');
-        const formatted = d.toLocaleDateString('he-IL',{day:'numeric',month:'long',year:'numeric'});
-        document.querySelector('.header-sub').textContent = formatted + ' · בואו נתעד את הרגעים';
-      }
-      if (theme) applyTheme(theme);
-      hideLoading();
-    } catch(e) { console.error('❌ שגיאה בטעינת אירוע:', e); hideLoading(); }
-  }
 
-  function applyTheme(theme) {
-    const themes = {
-      classic: ['#faf6f1','#c4896f','#c9a96e','#3a2820','#e8c5b0'],
-      boho:    ['#f5ede0','#c9956a','#b07840','#3d1f10','#e8c0a0'],
-      gold:    ['#1a1208','#c9a96e','#e8c87a','#f0e0c0','rgba(201,169,110,0.3)'],
-      floral:  ['#fdf0f5','#c8899e','#d4a0b5','#4a1530','#f0c0d0'],
-      minimal: ['#f8f8f6','#888880','#a8a8a0','#2a2a28','#d8d8d4'],
-    };
-    const t = themes[theme]; if (!t) return;
-    const r = document.documentElement;
-    r.style.setProperty('--cream', t[0]);
-    r.style.setProperty('--rose',  t[1]);
-    r.style.setProperty('--gold',  t[2]);
-    r.style.setProperty('--deep',  t[3]);
-    r.style.setProperty('--blush', t[4]);
-  }
-
-  async function startCamera() {
-    try {
-      if (stream) stream.getTracks().forEach(t => t.stop());
-      stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode, width:{ideal:1920}, height:{ideal:1080} },
-        audio: currentMode === 'video'
+      // לחיצה על רקע = חזרה
+      document.getElementById('photoPreviewModal').addEventListener('click', function (e) {
+        if (e.target === this) closePhotoPreview();
       });
+    });
+
+    async function loadEventData(eventId) {
+      try {
+        const res = await fetch(GAS_URL + '?action=event&eventID=' + eventId);
+        const data = await res.json();
+        if (!data.found) { hideLoading(); return; }
+        const { brideName, groomName, weddingDate, theme } = data.event;
+        if (brideName && groomName)
+          document.getElementById('coupleNames').innerHTML = brideName + ' <span>&</span> ' + groomName;
+        if (weddingDate) {
+          const d = new Date(weddingDate + 'T00:00:00');
+          document.querySelector('.header-sub').textContent =
+            d.toLocaleDateString('he-IL', { day: 'numeric', month: 'long', year: 'numeric' }) + ' · בואו נתעד את הרגעים';
+        }
+        if (theme) applyTheme(theme);
+        hideLoading();
+      } catch (e) { hideLoading(); }
+    }
+
+    function applyTheme(theme) {
+      const themes = {
+        classic: ['#faf6f1', '#c4896f', '#c9a96e', '#3a2820', '#e8c5b0'],
+        boho: ['#f5ede0', '#c9956a', '#b07840', '#3d1f10', '#e8c0a0'],
+        gold: ['#1a1208', '#c9a96e', '#e8c87a', '#f0e0c0', 'rgba(201,169,110,0.3)'],
+        floral: ['#fdf0f5', '#c8899e', '#d4a0b5', '#4a1530', '#f0c0d0'],
+        minimal: ['#f8f8f6', '#888880', '#a8a8a0', '#2a2a28', '#d8d8d4'],
+      };
+      const t = themes[theme]; if (!t) return;
+      const r = document.documentElement;
+      ['--cream', '--rose', '--gold', '--deep', '--blush'].forEach((v, i) => r.style.setProperty(v, t[i]));
+    }
+
+    async function startCamera() {
+      try {
+        if (stream) stream.getTracks().forEach(t => t.stop());
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode, width: { ideal: 1920 }, height: { ideal: 1080 } },
+          audio: currentMode === 'video'
+        });
+        const vid = document.getElementById('videoEl');
+        vid.srcObject = stream;
+        vid.classList.toggle('mirrored', facingMode === 'user');
+        document.getElementById('cameraPlaceholder').style.display = 'none';
+      } catch (e) {
+        const ph = document.getElementById('cameraPlaceholder');
+        ph.style.display = 'flex';
+        ph.querySelector('p').textContent = 'הגישה למצלמה נדחתה';
+        showToast('יש לאפשר גישה למצלמה בהגדרות', 'error');
+      }
+    }
+
+    function flipCamera() { facingMode = facingMode === 'environment' ? 'user' : 'environment'; startCamera(); }
+
+    function setMode(mode) {
+      currentMode = mode;
+      document.getElementById('photoModeBtn').classList.toggle('active', mode === 'photo');
+      document.getElementById('videoModeBtn').classList.toggle('active', mode === 'video');
+      if (mediaRecorder && mediaRecorder.state === 'recording') stopRecording();
+      startCamera();
+    }
+
+    function captureOrRecord() {
+      if (currentMode === 'photo') capturePhoto();
+      else { if (mediaRecorder && mediaRecorder.state === 'recording') stopRecording(); else startRecording(); }
+    }
+
+    function capturePhoto() {
       const vid = document.getElementById('videoEl');
-      vid.srcObject = stream;
-      // תמונת מראה רק במצלמה קידמית
-      vid.classList.toggle('mirrored', facingMode === 'user');
-      document.getElementById('cameraPlaceholder').style.display = 'none';
-    } catch(e) {
-      const ph = document.getElementById('cameraPlaceholder');
-      ph.style.display = 'flex';
-      ph.querySelector('p').textContent = 'הגישה למצלמה נדחתה';
-      showToast('יש לאפשר גישה למצלמה בהגדרות', 'error');
+      if (!stream) return showToast('יש להפעיל את המצלמה קודם', 'error');
+      const flash = document.getElementById('flashOverlay');
+      flash.classList.add('flash');
+      setTimeout(() => flash.classList.remove('flash'), 200);
+      const canvas = document.createElement('canvas');
+      const MAX = 1200;
+      let w = vid.videoWidth || 1280, h = vid.videoHeight || 960;
+      if (w > MAX) { h = Math.round(h * MAX / w); w = MAX; }
+      canvas.width = w; canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      if (facingMode === 'user') { ctx.translate(w, 0); ctx.scale(-1, 1); }
+      ctx.drawImage(vid, 0, 0, w, h);
+      canvas.toBlob(blob => {
+        if (!blob) return;
+        // שמור ישר לתור
+        addToQueue(blob, 'image/jpeg', canvas.toDataURL('image/jpeg', 0.75));
+      }, 'image/jpeg', 0.75);
     }
-  }
 
-  function flipCamera() { facingMode = facingMode==='environment'?'user':'environment'; startCamera(); }
-
-  function setMode(mode) {
-    currentMode = mode;
-    document.getElementById('photoModeBtn').classList.toggle('active', mode==='photo');
-    document.getElementById('videoModeBtn').classList.toggle('active', mode==='video');
-    document.getElementById('galleryModeBtn').classList.remove('active');
-    if (mediaRecorder && mediaRecorder.state==='recording') stopRecording();
-    startCamera();
-  }
-
-  function triggerFileInput() { document.getElementById('fileInput').click(); }
-
-  function captureOrRecord() {
-    if (currentMode==='photo') capturePhoto();
-    else { if (mediaRecorder && mediaRecorder.state==='recording') stopRecording(); else startRecording(); }
-  }
-
-  function capturePhoto() {
-    const vid = document.getElementById('videoEl');
-    if (!stream) return showToast('יש להפעיל את המצלמה קודם', 'error');
-    const flash = document.getElementById('flashOverlay');
-    flash.classList.add('flash');
-    setTimeout(() => flash.classList.remove('flash'), 200);
-    const canvas = document.createElement('canvas');
-    // דחיסת רזולוציה — מקסימום 1200px
-    const MAX = 1200;
-    let w = vid.videoWidth || 1280, h = vid.videoHeight || 960;
-    if (w > MAX) { h = Math.round(h * MAX / w); w = MAX; }
-    canvas.width = w; canvas.height = h;
-    const ctx = canvas.getContext('2d');
-    // שקף את התמונה אם מצלמה קידמית
-    if (facingMode === 'user') {
-      ctx.translate(w, 0);
-      ctx.scale(-1, 1);
+    // ════════════════════════════════════════
+    //  PHOTO PREVIEW — צפייה בתמונה מהאלבום
+    // ════════════════════════════════════════
+    function closePhotoPreview() {
+      document.getElementById('photoPreviewModal').classList.remove('show');
     }
-    ctx.drawImage(vid, 0, 0, w, h);
-    canvas.toBlob(blob => { if(blob) addToQueue(blob,'image/jpeg',canvas.toDataURL('image/jpeg',0.75)); }, 'image/jpeg', 0.75);
-  }
 
-  function startRecording() {
-    if (!stream) return showToast('יש להפעיל את המצלמה קודם', 'error');
-    recordedChunks = [];
-    const opts = MediaRecorder.isTypeSupported('video/webm;codecs=vp9') ? {mimeType:'video/webm;codecs=vp9'} : {mimeType:'video/webm'};
-    mediaRecorder = new MediaRecorder(stream, opts);
-    mediaRecorder.ondataavailable = e => { if(e.data.size) recordedChunks.push(e.data); };
-    mediaRecorder.onstop = () => {
-      const blob = new Blob(recordedChunks, {type:'video/webm'});
-      addToQueue(blob, 'video/webm', URL.createObjectURL(blob), true);
-    };
-    mediaRecorder.start(100);
-    document.getElementById('recIndicator').style.display = 'flex';
-    document.getElementById('shutterBtn').style.borderColor = '#b44040';
-    recSeconds = 0;
-    recInterval = setInterval(() => {
-      recSeconds++;
-      const m=Math.floor(recSeconds/60), s=recSeconds%60;
-      document.getElementById('recTimer').textContent = `${m}:${s.toString().padStart(2,'0')}`;
-    }, 1000);
-  }
-
-  function stopRecording() {
-    if (mediaRecorder && mediaRecorder.state==='recording') mediaRecorder.stop();
-    clearInterval(recInterval);
-    document.getElementById('recIndicator').style.display = 'none';
-    document.getElementById('shutterBtn').style.borderColor = '';
-  }
-
-  function handleFileInput(e) {
-    [...e.target.files].forEach(file => {
-      const r = new FileReader();
-      r.onload = ev => addToQueue(file, file.type, ev.target.result);
-      r.readAsDataURL(file);
-    });
-    e.target.value = '';
-  }
-
-  function addToQueue(blob, type, dataUrl, isVideo=false) {
-    const id = Date.now() + Math.random();
-    queue.push({id, blob, type, dataUrl, status:'pending', isVideo});
-    renderQueue();
-    if (!isVideo) {
-      const img = document.createElement('img');
-      img.src = dataUrl; img.className = 'preview-thumb';
-      document.getElementById('previewStrip').prepend(img);
+    function previewQueueItem(id) {
+      const item = queue.find(q => q.id === id);
+      if (!item || item.isVideo) return;
+      document.getElementById('photoPreviewImg').src = item.dataUrl;
+      // כפתור מחיקה
+      document.getElementById('previewDiscardBtn').onclick = () => {
+        queue = queue.filter(q => q.id !== id);
+        renderQueue();
+        closePhotoPreview();
+        showToast('תמונה הוסרה מהאלבום', '');
+      };
+      document.getElementById('photoPreviewModal').classList.add('show');
     }
-    showToast('נוסף לתור ✓', 'success');
-  }
+    // ════════════════════════════════════════
 
-  function renderQueue() {
-    const grid = document.getElementById('queueGrid');
-    document.getElementById('queueCount').textContent = queue.filter(i=>i.status!=='done').length;
-    if (!queue.length) { grid.innerHTML='<div class="empty-state" style="grid-column:1/-1">צלמו תמונות ונתחיל ✨</div>'; return; }
-    grid.innerHTML = '';
-    queue.forEach(item => {
-      const div = document.createElement('div');
-      div.className = 'queue-item';
-      if (item.isVideo) { const v=document.createElement('video'); v.src=item.dataUrl; v.muted=true; v.playsInline=true; div.appendChild(v); }
-      else { const img=document.createElement('img'); img.src=item.dataUrl; div.appendChild(img); }
-      const st = document.createElement('div'); st.className='queue-status';
-      if (item.status==='uploading') { st.classList.add('uploading'); st.innerHTML='<div class="spinner"></div>'; }
-      else if (item.status==='done')  { st.classList.add('done'); st.textContent='✓'; }
-      else if (item.status==='error') { st.classList.add('error'); st.textContent='✗'; }
-      div.appendChild(st);
-      if (item.status==='pending') {
-        const rm=document.createElement('button'); rm.className='remove-thumb'; rm.textContent='✕';
-        rm.onclick=()=>{ queue=queue.filter(q=>q.id!==item.id); renderQueue(); };
-        div.appendChild(rm);
-      }
-      grid.appendChild(div);
-    });
-  }
+    function startRecording() {
+      if (!stream) return showToast('יש להפעיל את המצלמה קודם', 'error');
+      recordedChunks = [];
+      const opts = MediaRecorder.isTypeSupported('video/webm;codecs=vp9')
+        ? { mimeType: 'video/webm;codecs=vp9' } : { mimeType: 'video/webm' };
+      mediaRecorder = new MediaRecorder(stream, opts);
+      mediaRecorder.ondataavailable = e => { if (e.data.size) recordedChunks.push(e.data); };
+      mediaRecorder.onstop = () => {
+        const blob = new Blob(recordedChunks, { type: 'video/webm' });
+        addToQueue(blob, 'video/webm', URL.createObjectURL(blob), true);
+      };
+      mediaRecorder.start(100);
+      document.getElementById('recIndicator').style.display = 'flex';
+      document.getElementById('shutterBtn').style.borderColor = '#b44040';
+      recSeconds = 0;
+      recInterval = setInterval(() => {
+        recSeconds++;
+        const m = Math.floor(recSeconds / 60), s = recSeconds % 60;
+        document.getElementById('recTimer').textContent = `${m}:${s.toString().padStart(2, '0')}`;
+      }, 1000);
+    }
 
-  async function uploadAll() {
-    const pending = queue.filter(i => i.status === 'pending');
-    if (!pending.length) return showToast('אין מה להעלות', 'error');
-    const btn = document.getElementById('uploadAllBtn');
-    btn.disabled = true; btn.innerHTML = '<div class="spinner"></div> משתף…';
-    const wrap = document.getElementById('progressWrap'), bar = document.getElementById('progressBar');
-    wrap.classList.add('active'); bar.style.width = '10%';
+    function stopRecording() {
+      if (mediaRecorder && mediaRecorder.state === 'recording') mediaRecorder.stop();
+      clearInterval(recInterval);
+      document.getElementById('recIndicator').style.display = 'none';
+      document.getElementById('shutterBtn').style.borderColor = '';
+    }
 
-    // סמן הכל כ"מעלה" בבת אחת
-    pending.forEach(i => { i.status = 'uploading'; });
-    renderQueue();
-
-    // שלח הכל במקביל!
-    const results = await Promise.all(pending.map(item => uploadItem(item)));
-
-    results.forEach((success, idx) => {
-      pending[idx].status = success ? 'done' : 'error';
-    });
-    renderQueue();
-
-    wrap.classList.remove('active'); bar.style.width = '0%';
-    btn.disabled = false;
-    btn.innerHTML = '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> שתף הכל';
-
-    const errors = results.filter(r => !r).length;
-    if (errors) showToast(`${results.length - errors} הועלו · ${errors} נכשלו`, 'error');
-    else        showToast(`${results.length} קבצים שותפו! 💕`, 'success');
-    setTimeout(() => { queue = queue.filter(i => i.status !== 'done'); renderQueue(); }, 2500);
-  }
-
-  async function uploadItem(item) {
-    try {
-      const base64 = await blobToBase64(item.blob);
-      const ext = item.type.includes('video') ? 'webm' : 'jpg';
-      await fetch(GAS_URL, {
-        method:'POST', mode:'no-cors',
-        body: JSON.stringify({ filename:`memory_${Date.now()}.${ext}`, mimeType:item.type, data:base64, email:userEmail||'', secret:'vQ8$kX#2mP@9wL!4nR&zT6*jF', eventId:currentEventId||'' })
+    function handleFileInput(e) {
+      [...e.target.files].forEach(file => {
+        const r = new FileReader();
+        r.onload = ev => addToQueue(file, file.type, ev.target.result);
+        r.readAsDataURL(file);
       });
-      return true;
-    } catch(e) { console.error('Upload error:', e); return false; }
-  }
-
-  function blobToBase64(blob) {
-    return new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result.split(',')[1]); r.onerror=rej; r.readAsDataURL(blob); });
-  }
-
-  function showEmailModal() {
-    document.getElementById('emailModal').style.display='flex';
-    if (userEmail) document.getElementById('emailInput').value=userEmail;
-  }
-
-  function closeEmailModal() {
-    document.getElementById('emailModal').style.display='none';
-    localStorage.setItem('wedding_email_asked','1');
-  }
-
-  function saveEmail() {
-    const val = document.getElementById('emailInput').value.trim();
-    if (val && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
-      userEmail=val; localStorage.setItem('wedding_email',val);
-      closeEmailModal();
-      document.getElementById('emailNudge').style.display='none';
-      showToast('המייל נשמר 💌', 'success');
-    } else {
-      document.getElementById('emailInput').style.borderColor='#b44040';
-      setTimeout(()=>document.getElementById('emailInput').style.borderColor='',1500);
+      e.target.value = '';
     }
-  }
 
-  let toastTimer;
-  function showToast(msg, type='') {
-    const t=document.getElementById('toast'); t.textContent=msg; t.className='show '+type;
-    clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.className='',3000);
-  }
-</script>
+    function addToQueue(blob, type, dataUrl, isVideo = false) {
+      const id = Date.now() + Math.random();
+      queue.push({ id, blob, type, dataUrl, status: 'pending', isVideo });
+      renderQueue();
+      if (!isVideo) {
+        const img = document.createElement('img');
+        img.src = dataUrl; img.className = 'preview-thumb';
+        img.onclick = () => previewQueueItem(id);
+        document.getElementById('previewStrip').prepend(img);
+      }
+      showToast('נוסף לאלבום ✓', 'success');
+    }
+
+    function renderQueue() {
+      const grid = document.getElementById('queueGrid');
+      document.getElementById('queueCount').textContent = queue.filter(i => i.status !== 'done').length;
+      if (selectMode) grid.classList.add('select-mode'); else grid.classList.remove('select-mode');
+      if (!queue.length) { grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1">צלמו תמונות ויצטרפו לאלבום ✨</div>'; return; }
+      grid.innerHTML = '';
+      queue.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'queue-item' + (selectedIds.has(item.id) ? ' selected' : '');
+        if (item.isVideo) {
+          const v = document.createElement('video'); v.src = item.dataUrl; v.muted = true; v.playsInline = true; div.appendChild(v);
+        } else {
+          const img = document.createElement('img'); img.src = item.dataUrl; div.appendChild(img);
+        }
+        const circle = document.createElement('div'); circle.className = 'select-circle'; div.appendChild(circle);
+        const st = document.createElement('div'); st.className = 'queue-status';
+        if (item.status === 'uploading') { st.classList.add('uploading'); st.innerHTML = '<div class="spinner"></div>'; }
+        else if (item.status === 'done') { st.classList.add('done'); st.textContent = '✓'; }
+        else if (item.status === 'error') { st.classList.add('error'); st.textContent = '✗'; }
+        div.appendChild(st);
+        div.onclick = () => {
+          if (selectMode) {
+            if (item.status !== 'pending') return;
+            if (selectedIds.has(item.id)) selectedIds.delete(item.id); else selectedIds.add(item.id);
+            updateSelectBar(); renderQueue();
+          } else {
+            if (!item.isVideo && item.status === 'pending') previewQueueItem(item.id);
+          }
+        };
+        grid.appendChild(div);
+      });
+    }
+
+    function toggleSelectMode() {
+      selectMode = !selectMode;
+      selectedIds.clear();
+      const btn = document.getElementById('selectModeBtn');
+      btn.style.display = selectMode ? 'none' : ''; // ← הסתר/הצג
+      document.getElementById('selectBar').classList.toggle('visible', selectMode);
+      document.getElementById('uploadAllBtn').style.display = selectMode ? 'none' : '';
+      updateSelectBar(); renderQueue();
+    }
+
+    function updateSelectBar() {
+      const n = selectedIds.size;
+      const shareBtn = document.getElementById('selectShareBtn');
+      const deleteBtn = document.getElementById('selectDeleteBtn');
+      shareBtn.disabled = n === 0; deleteBtn.disabled = n === 0;
+      shareBtn.innerHTML = `<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> שתף${n > 0 ? ' (' + n + ')' : ''}`;
+      deleteBtn.innerHTML = '🗑 הסר' + (n > 0 ? ' (' + n + ')' : '');
+    }
+
+    async function shareSelected() {
+      const selected = queue.filter(i => selectedIds.has(i.id) && i.status === 'pending');
+      if (!selected.length) return;
+      document.getElementById('selectShareBtn').disabled = true;
+      document.getElementById('selectShareBtn').innerHTML = '<div class="spinner"></div>';
+      selected.forEach(i => { i.status = 'uploading'; });
+      renderQueue();
+      const results = await Promise.all(selected.map(item => uploadItem(item)));
+      results.forEach((ok, i) => { selected[i].status = ok ? 'done' : 'error'; });
+      selectedIds.clear(); toggleSelectMode(); renderQueue();
+      const errors = results.filter(r => !r).length;
+      if (errors) showToast(`${results.length - errors} הועלו · ${errors} נכשלו`, 'error');
+      else showToast(`${results.length} קבצים שותפו! 💕`, 'success');
+      setTimeout(() => { queue = queue.filter(i => i.status !== 'done'); renderQueue(); }, 2500);
+    }
+
+    function deleteSelected() {
+      const count = selectedIds.size;
+      queue = queue.filter(i => !selectedIds.has(i.id));
+      selectedIds.clear(); toggleSelectMode(); renderQueue();
+      showToast(count + ' תמונות הוסרו', '');
+    }
+
+    async function uploadAll() {
+      const pending = queue.filter(i => i.status === 'pending');
+      if (!pending.length) return showToast('אין מה להעלות', 'error');
+      const btn = document.getElementById('uploadAllBtn');
+      btn.disabled = true; btn.innerHTML = '<div class="spinner"></div> משתף…';
+      const wrap = document.getElementById('progressWrap'), bar = document.getElementById('progressBar');
+      wrap.classList.add('active'); bar.style.width = '10%';
+      pending.forEach(i => { i.status = 'uploading'; });
+      renderQueue();
+      const results = await Promise.all(pending.map(item => uploadItem(item)));
+      results.forEach((ok, i) => { pending[i].status = ok ? 'done' : 'error'; });
+      renderQueue();
+      wrap.classList.remove('active'); bar.style.width = '0%';
+      btn.disabled = false;
+      btn.innerHTML = '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> שתף הכל';
+      const errors = results.filter(r => !r).length;
+      if (errors) showToast(`${results.length - errors} הועלו · ${errors} נכשלו`, 'error');
+      else showToast(`${results.length} קבצים שותפו! 💕`, 'success');
+      setTimeout(() => { queue = queue.filter(i => i.status !== 'done'); renderQueue(); }, 2500);
+    }
+
+    async function uploadItem(item) {
+      try {
+        const base64 = await blobToBase64(item.blob);
+        const ext = item.type.includes('video') ? 'webm' : 'jpg';
+        await fetch(GAS_URL, {
+          method: 'POST', mode: 'no-cors',
+          body: JSON.stringify({ filename: `memory_${Date.now()}.${ext}`, mimeType: item.type, data: base64, email: userEmail || '', secret: 'vQ8$kX#2mP@9wL!4nR&zT6*jF', eventId: currentEventId || '' })
+        });
+        return true;
+      } catch (e) { return false; }
+    }
+
+    function blobToBase64(blob) {
+      return new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result.split(',')[1]); r.onerror = rej; r.readAsDataURL(blob); });
+    }
+
+    function showEmailModal() {
+      document.getElementById('emailModal').style.display = 'flex';
+      if (userEmail) document.getElementById('emailInput').value = userEmail;
+    }
+    function closeEmailModal() {
+      document.getElementById('emailModal').style.display = 'none';
+      localStorage.setItem('wedding_email_asked', '1');
+    }
+    function saveEmail() {
+      const val = document.getElementById('emailInput').value.trim();
+      if (val && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
+        userEmail = val; localStorage.setItem('wedding_email', val);
+        closeEmailModal();
+        document.getElementById('emailNudge').style.display = 'none';
+        showToast('המייל נשמר 💌', 'success');
+      } else {
+        document.getElementById('emailInput').style.borderColor = '#b44040';
+        setTimeout(() => document.getElementById('emailInput').style.borderColor = '', 1500);
+      }
+    }
+
+    let toastTimer;
+    function showToast(msg, type = '') {
+      const t = document.getElementById('toast');
+      t.textContent = msg; t.className = 'show ' + type;
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => t.className = '', 3000);
+    }
+  </script>
 </body>
+
 </html>
